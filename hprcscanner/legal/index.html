@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    body {transition: opacity ease-in 0.2s; } 
+    body[unresolved] {opacity: 0; display: block; overflow: hidden; position: relative; } 
+  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#030712" />
+  <title>Legal — Privacy Policy, Terms & Disclaimer · HPRC Scanner</title>
+  <meta name="description" content="Privacy Policy, Terms of Service and Disclaimer for the HPRC Scanner app by MH Innovix." />
+
+  <!-- Random Theme Selector Script (Executes before render) -->
+  <script>
+    (function() {
+      const themes = [
+        {
+          name: 'Sunset orange',
+          primary: '#ff6b00',
+          primaryRgb: '255, 107, 0',
+          secondary: '#ffa500',
+          secondaryRgb: '255, 165, 0',
+          flare: '#ff3d00',
+          flareRgb: '255, 61, 0',
+          light: '#ffedd5',
+          hueRange: [20, 38]
+        },
+        {
+          name: 'Emerald green',
+          primary: '#10b981',
+          primaryRgb: '16, 185, 129',
+          secondary: '#34d399',
+          secondaryRgb: '52, 211, 153',
+          flare: '#059669',
+          flareRgb: '5, 150, 105',
+          light: '#d1fae5',
+          hueRange: [140, 165]
+        },
+        {
+          name: 'Crimson red',
+          primary: '#f43f5e',
+          primaryRgb: '244, 63, 94',
+          secondary: '#fb7185',
+          secondaryRgb: '251, 113, 133',
+          flare: '#e11d48',
+          flareRgb: '225, 29, 72',
+          light: '#ffe4e6',
+          hueRange: [345, 355]
+        },
+        {
+          name: 'Royal purple',
+          primary: '#a855f7',
+          primaryRgb: '168, 85, 247',
+          secondary: '#c084fc',
+          secondaryRgb: '192, 132, 252',
+          flare: '#7e22ce',
+          flareRgb: '126, 34, 206',
+          light: '#f3e8ff',
+          hueRange: [265, 285]
+        },
+        {
+          name: 'Classic blue',
+          primary: '#3b82f6',
+          primaryRgb: '59, 130, 246',
+          secondary: '#60a5fa',
+          secondaryRgb: '96, 165, 250',
+          flare: '#1d4ed8',
+          flareRgb: '29, 78, 216',
+          light: '#dbeafe',
+          hueRange: [210, 230]
+        }
+      ];
+
+      const selectedTheme = themes[Math.floor(Math.random() * themes.length)];
+      window.__SELECTED_THEME__ = selectedTheme;
+
+      const root = document.documentElement;
+      root.style.setProperty('--cosmic-orange', selectedTheme.primary);
+      root.style.setProperty('--cosmic-amber', selectedTheme.secondary);
+      root.style.setProperty('--cosmic-flare', selectedTheme.flare);
+      root.style.setProperty('--theme-primary-rgb', selectedTheme.primaryRgb);
+      root.style.setProperty('--theme-secondary-rgb', selectedTheme.secondaryRgb);
+      root.style.setProperty('--theme-flare-rgb', selectedTheme.flareRgb);
+      root.style.setProperty('--theme-light', selectedTheme.light);
+    })();
+  </script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #030712;
+      --cosmic-orange: #ff6b00;
+      --cosmic-amber: #ffa500;
+      --cosmic-flare: #ff3d00;
+      --theme-primary-rgb: 255, 107, 0;
+      --theme-secondary-rgb: 255, 165, 0;
+      --theme-flare-rgb: 255, 61, 0;
+      --theme-light: #ffedd5;
+      --grid-line: rgba(255,255,255,0.045);
+      --border-soft: rgba(255,255,255,0.06);
+    }
+    * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    html, body {
+      background: var(--bg);
+      color: #e5e7eb;
+      font-family: 'Inter', system-ui, sans-serif;
+      overflow-x: clip;
+      scroll-behavior: smooth;
+    }
+    h1, h2, h3, h4, .font-display { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.02em; }
+
+    /* ── Dynamic Utility Classes ────────────────────────── */
+    .theme-text-light { color: var(--theme-light); }
+    .theme-text-primary { color: var(--cosmic-orange); }
+    .theme-text-secondary { color: var(--cosmic-amber); }
+    .theme-bg-primary { background-color: var(--cosmic-orange); }
+    .theme-bg-secondary { background-color: var(--cosmic-amber); }
+    .theme-bg-flare { background-color: var(--cosmic-flare); }
+    .theme-hover-text-primary:hover { color: var(--cosmic-orange); }
+
+    .grid-bg {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(var(--grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+      background-size: 60px 60px;
+      -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, #000 40%, transparent 90%);
+              mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, #000 40%, transparent 90%);
+      animation: gridShift 30s linear infinite;
+    }
+    @keyframes gridShift { 0% { background-position: 0 0, 0 0; } 100% { background-position: 60px 60px, 60px 60px; } }
+
+    .orb { position: fixed; border-radius: 9999px; filter: blur(120px); opacity: 0.45; z-index: 0; pointer-events: none; will-change: transform; }
+    .orb.a { width: 480px; height: 480px; background: var(--cosmic-orange); top: -140px; left: -120px; animation: float1 20s ease-in-out infinite; }
+    .orb.b { width: 420px; height: 420px; background: var(--cosmic-flare); bottom: -180px; right: -120px; opacity: .25; animation: float2 24s ease-in-out infinite; }
+    .orb.c { width: 360px; height: 360px; background: var(--cosmic-amber); top: 55%; left: 50%; opacity: .12; animation: float3 28s ease-in-out infinite; }
+    @keyframes float1 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(70px, 50px); } }
+    @keyframes float2 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-60px,-60px); } }
+    @keyframes float3 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(40px,-40px); } }
+
+    #cometCanvas { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+
+    .glass {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border-soft);
+      backdrop-filter: blur(18px) saturate(140%);
+      -webkit-backdrop-filter: blur(18px) saturate(140%);
+    }
+    .glass-strong {
+      background: rgba(10,12,20,0.6);
+      border: 1px solid rgba(255,255,255,0.07);
+      backdrop-filter: blur(22px) saturate(160%);
+      -webkit-backdrop-filter: blur(22px) saturate(160%);
+    }
+
+    .shimmer-text {
+      background: linear-gradient(110deg, #ffffff 30%, var(--cosmic-orange) 48%, var(--cosmic-amber) 58%, #ffffff 75%);
+      background-size: 200% 100%;
+      -webkit-background-clip: text; background-clip: text;
+      color: transparent;
+      animation: shimmer 6s linear infinite;
+      filter: drop-shadow(0 0 24px rgba(var(--theme-primary-rgb),0.25));
+    }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .6rem 1.1rem; border-radius: 9999px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #e5e7eb; font-weight: 500; font-size: .9rem;
+      transition: transform .5s cubic-bezier(.2,.8,.2,1), background .3s, border-color .3s;
+    }
+    .btn-ghost:hover { transform: translateY(-1px); background: rgba(255,255,255,0.07); border-color: rgba(var(--theme-primary-rgb),0.4); }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .6rem 1.1rem; border-radius: 9999px;
+      background: linear-gradient(135deg, var(--cosmic-orange) 0%, var(--cosmic-flare) 100%);
+      color: #000000 !important;
+      font-weight: 700; font-size: .95rem;
+      transition: transform .5s cubic-bezier(.2,.8,.2,1), filter .3s, box-shadow .5s;
+      box-shadow: 0 0 0 1px rgba(var(--theme-primary-rgb),0.4), 0 10px 26px -10px rgba(var(--theme-primary-rgb),0.55);
+    }
+    .btn-primary:hover { transform: translateY(-1px) scale(1.015); filter: brightness(1.12); }
+
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.2,.8,.2,1), transform .9s cubic-bezier(.2,.8,.2,1); }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    .container-x { max-width: 1200px; margin: 0 auto; padding-left: 1.25rem; padding-right: 1.25rem; }
+
+    /* Legal content typography */
+    .legal h2 { color: #fff; font-size: 1.75rem; font-weight: 600; margin-bottom: 1rem; letter-spacing: -0.02em; }
+    .legal h3 { color: #e5e7eb; font-size: 1.1rem; font-weight: 600; margin-top: 1.75rem; margin-bottom: .6rem; font-family: 'Space Grotesk', sans-serif; }
+    .legal p, .legal li { color: #cbd5e1; font-size: .95rem; line-height: 1.75; }
+    .legal p { margin-bottom: 1rem; }
+    .legal ul { margin: .5rem 0 1.25rem 0; padding-left: 1.25rem; list-style: disc; }
+    .legal li { margin-bottom: .5rem; }
+    .legal strong { color: #fff; font-weight: 600; }
+    .legal em { color: var(--theme-light); font-style: normal; font-weight: 500; }
+    .legal a { color: var(--theme-light); text-decoration: underline; text-underline-offset: 3px; }
+    .legal a:hover { color: var(--cosmic-orange); }
+
+    .callout {
+      border-left: 2px solid rgba(var(--theme-primary-rgb),0.6);
+      background: rgba(var(--theme-primary-rgb),0.04);
+      padding: 1rem 1.25rem;
+      border-radius: 0 12px 12px 0;
+      margin: 1.25rem 0;
+      color: #cbd5e1;
+      font-size: .92rem;
+    }
+    .callout.warn {
+      border-left-color: rgba(var(--theme-secondary-rgb),0.7);
+      background: rgba(var(--theme-secondary-rgb),0.05);
+    }
+    .callout.danger {
+      border-left-color: rgba(248,113,113,0.7);
+      background: rgba(248,113,113,0.05);
+    }
+    .callout strong { color: #fff; }
+
+    /* TOC */
+    .toc-link {
+      display: flex; align-items: center; gap: .65rem;
+      padding: .65rem .85rem; border-radius: 10px;
+      color: #94a3b8; font-size: .9rem;
+      transition: background .3s, color .3s, border-color .3s;
+      border: 1px solid transparent;
+    }
+    .toc-link:hover { background: rgba(255,255,255,0.03); color: #e5e7eb; }
+    .toc-link.active {
+      background: rgba(var(--theme-primary-rgb),0.06);
+      color: var(--theme-light);
+      border-color: rgba(var(--theme-primary-rgb),0.2);
+    }
+    .toc-dot { width: 6px; height: 6px; border-radius: 999px; background: currentColor; opacity: .55; }
+
+    .pulse-dot { position: relative; width: 8px; height: 8px; border-radius: 999px; background: var(--cosmic-orange); }
+    .pulse-dot::after { content: ""; position: absolute; inset: -4px; border-radius: 999px; border: 1px solid rgba(var(--theme-primary-rgb),0.6); animation: pulse 2s ease-out infinite; }
+    @keyframes pulse { 0% { transform: scale(.6); opacity: 1; } 100% { transform: scale(1.8); opacity: 0; } }
+
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: #07090f; }
+    ::-webkit-scrollbar-thumb { background: rgba(var(--theme-primary-rgb),0.15); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(var(--theme-primary-rgb),0.3); }
+
+    .nav-link { position: relative; transition: color .3s; }
+    .nav-link::after { content:""; position:absolute; left: 0; bottom:-4px; width:100%; height:1px; background: linear-gradient(90deg, transparent, var(--cosmic-orange), transparent); transform: scaleX(0); transition: transform .35s ease; }
+    .nav-link:hover { color: #fff; }
+    .nav-link:hover::after { transform: scaleX(1); }
+  </style>
+</head>
+<body class="relative" id="top">
+
+  <div class="grid-bg" aria-hidden="true"></div>
+  <div class="orb a" aria-hidden="true"></div>
+  <div class="orb b" aria-hidden="true"></div>
+  <div class="orb c" aria-hidden="true"></div>
+  <canvas id="cometCanvas" aria-hidden="true"></canvas>
+
+  <!-- ─────────── Navbar ─────────── -->
+  <header class="fixed top-0 inset-x-0 z-50" data-testid="navbar">
+    <div class="container-x mt-4">
+      <nav class="glass-strong rounded-full px-4 sm:px-6 py-3 flex items-center justify-between">
+        <a href="../index.html" class="flex items-center gap-2.5" data-testid="nav-logo">
+          <img src="https://mhinnovix.github.io/assets/HPRCScannerLogo.png" alt="HPRC Scanner Logo" class="w-8 h-8 rounded-xl object-contain bg-white/5" style="box-shadow:0 0 22px -2px rgba(var(--theme-primary-rgb),.6);">
+          <span class="font-display font-semibold tracking-tight text-white">HPRC Scanner</span>
+        </a>
+
+        <div class="hidden md:flex items-center gap-7 text-sm text-gray-300">
+          <a href="#privacy" class="nav-link" data-testid="nav-privacy">Privacy</a>
+          <a href="#terms" class="nav-link" data-testid="nav-terms">Terms</a>
+          <a href="#disclaimer" class="nav-link" data-testid="nav-disclaimer">Disclaimer</a>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <a href="../index.html" class="btn-ghost" data-testid="nav-back-home">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+            Back to Home
+          </a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+ <!-- ─────────── Header / Title ─────────── -->
+  <section class="relative z-10 pt-36 sm:pt-44 pb-12" data-testid="legal-hero">
+    <div class="container-x text-center">
+      
+      <div class="reveal mx-auto mb-10 flex justify-center" data-testid="legal-logo">
+        <img 
+          src="https://mhinnovix.github.io/assets/HPRCScannerLogo.png" 
+          alt="HPRC Scanner App Logo" 
+          class="w-24 h-24 rounded-3xl object-contain bg-white/5 p-2"
+          style="box-shadow: 0 0 50px 0px rgba(var(--theme-primary-rgb),0.5);"
+        >
+      </div>
+
+      <div class="reveal inline-flex items-center gap-2 glass rounded-full px-4 py-2 mb-8" style="box-shadow: 0 0 0 1px rgba(var(--theme-primary-rgb),0.25), 0 0 40px -6px rgba(var(--theme-primary-rgb),0.45);">
+        <span class="pulse-dot"></span>
+        <span class="text-xs sm:text-sm theme-text-light tracking-wide">Legal Documents · HPRC Scanner || MH Innovix</span>
+      </div>
+
+      <h1 class="reveal font-display font-bold text-4xl sm:text-5xl lg:text-6xl leading-[1.05]" data-testid="legal-heading">
+        <span class="shimmer-text">Privacy, Terms</span><br/>
+        <span class="text-white">&amp; <span class="shimmer-text">Disclaimer</span></span>
+      </h1>
+      <p class="reveal mt-6 max-w-2xl mx-auto text-base text-gray-400">
+        The rules of the road for using HPRC Scanner — written plainly, applied strictly.
+        Please read carefully before installing, subscribing or scanning.
+      </p>
+      <p class="reveal mt-4 text-xs text-gray-500" data-testid="legal-effective-date">
+        Effective Date: <span id="effDate"></span> · Last updated: <span id="updDate"></span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ─────────── Body: TOC + Content ─────────── -->
+  <section class="relative z-10 pb-24">
+    <div class="container-x grid lg:grid-cols-[260px_1fr] gap-10">
+
+      <aside class="hidden lg:block sticky top-28 self-start" data-testid="toc">
+        <div class="glass rounded-2xl p-3">
+          <p class="px-3 pt-2 pb-3 text-[11px] uppercase tracking-[0.22em] text-gray-500">On this page</p>
+          <nav class="flex flex-col gap-1" id="tocNav">
+            <a href="#privacy"     class="toc-link" data-testid="toc-privacy"><span class="toc-dot"></span> 01 · Privacy Policy</a>
+            <a href="#terms"       class="toc-link" data-testid="toc-terms"><span class="toc-dot"></span> 02 · Terms of Service</a>
+            <a href="#disclaimer"  class="toc-link" data-testid="toc-disclaimer"><span class="toc-dot"></span> 03 · Disclaimer &amp; Liability</a>
+            <a href="#contact"     class="toc-link" data-testid="toc-contact"><span class="toc-dot"></span> 04 · Contact &amp; Grievance</a>
+          </nav>
+
+          <div class="mt-4 mx-1 p-3 rounded-xl" style="background: rgba(var(--theme-primary-rgb),0.04); border: 1px solid rgba(var(--theme-primary-rgb),0.15);">
+            <p class="text-[11px] uppercase tracking-[0.2em] theme-text-primary mb-1">Quick note</p>
+            <p class="text-xs text-gray-400 leading-relaxed">By installing or using the app, you agree to all three documents below in full.</p>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Content -->
+      <article class="legal space-y-8" data-testid="legal-content">
+
+        <!-- ─── Section 1: Privacy ─── -->
+        <div id="privacy" class="reveal glass rounded-3xl p-7 sm:p-10 scroll-mt-28" data-testid="section-privacy">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-[11px] uppercase tracking-[0.22em] theme-text-primary">Section 01</span>
+            <span class="h-px flex-1 bg-gradient-to-r from-orange-500/40 to-transparent"></span>
+          </div>
+          <h2>Privacy Policy</h2>
+          <p>
+            This Privacy Policy describes how <strong>MH Innovix</strong> (“we”, “us”, or “the Developer”) handles
+            information when you use the <strong>HPRC Scanner</strong> mobile application, browser extension and
+            associated services (collectively, the “Service”). We design HPRC Scanner with an
+            <em>offline-first, privacy-preserving</em> architecture.
+          </p>
+
+          <h3>1.1 Offline-First Data Storage &amp; PC Live Entry</h3>
+          <p>
+            HPRC Scanner is fundamentally an offline-first utility. For standard usage, <strong>extracted student data, marks, and locally generated outputs are stored exclusively on your own device</strong> in a secured local database. Please note that the app does not process attendance data, and the physical photographs of register pages are transient—they are processed solely for extraction and are not saved in the app's local database after the scanning is complete. We generally do <strong>not</strong> upload, mirror, replicate or back up student records to any servers operated by MH Innovix.
+          </p>
+          <p>
+            <strong>Exception for PC Live Entry:</strong> If you use the "PC Live Entry" feature to transfer data to your PC/browser extension, the relevant student data is <strong>temporarily stored</strong> in our secured database solely to facilitate this real-time transfer. This temporary data is automatically purged from our database once the transfer completes.
+          </p>
+
+          <h3>1.2 AI Processing &amp; Data Logging (Free vs. Premium)</h3>
+          <p>
+            When you initiate a scan, the relevant document image is transmitted securely to the Google Gemini API for optical character recognition and text extraction.
+          </p>
+          <p>
+            <strong>Data Logging &amp; Analysis:</strong> To analyze OCR accuracy, troubleshoot issues, and continuously improve the Service, scan inputs (images) and their corresponding text outputs may be temporarily logged in our Google AI Studio console, where they can be reviewed by the developer solely for analytical and developmental purposes.
+          </p>
+          <p>
+            <strong>Tier-Based Privacy:</strong> We are implementing a tier-based privacy model for these developer logs. For <strong>Free Tier</strong> users, this logging remains active to help us train and improve the app's accuracy. For <strong>Premium (Subscribed)</strong> users, we are transitioning to a strict ephemeral processing pipeline where developer logging is disabled, ensuring that scanned images are not retained or reviewed in our AI console after the extraction completes.
+          </p>
+          <p>
+            Limited, time-bounded developer logs may be generated strictly for diagnostic and bug-fixing
+            purposes. Such logs are subject to Google Cloud's standard retention and security policies and
+            are never sold, shared with third parties for marketing, or used to build a profile of any
+            individual student. Refer to Google's
+            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a> and
+            <a href="https://ai.google.dev/gemini-api/terms" target="_blank" rel="noopener">Gemini API Terms</a>
+            for upstream handling.
+          </p>
+
+          <h3>1.3 Cloud Sync &amp; Profile Data</h3>
+          <p>
+            If you create an account, we sync minimal profile data — <strong>email address, display name, device identifier, subscription tier and scan-limit balance</strong> — to our database. This enables you to seamlessly restore your purchased limits upon re-login. We do not sync passwords, mirror or expose any scanned content, register photographs or student records via the cloud account (with the temporary exception of the PC Live Entry feature described above).
+          </p>
+
+          <h3>1.4 Analytics, Admin Panel &amp; Crash Reporting</h3>
+          <p>
+            We use <strong>Firebase Crashlytics</strong> and standard analytics tools to collect anonymised usage data and crash reports. This helps us understand stability issues and aggregate feature usage to improve the Service. These analytics do not include scanned content or personally identifying student information.
+          </p>
+
+          <h3>1.5 Permissions Requested</h3>
+          <ul>
+            <li><strong>Camera</strong> — to capture register pages.</li>
+            <li><strong>Storage</strong> — to save outputs (PDFs, Excel exports) locally.</li>
+            <li><strong>Internet</strong> — to call the Gemini OCR API and sync subscription status.</li>
+            <li><strong>Billing</strong> — to process In-App Purchases via Google Play Billing.</li>
+          </ul>
+
+          <h3>1.6 Customer Support</h3>
+          <p>
+            When you use the in-app support or contact feature, your name, email address, and message are transmitted directly from the client app to our database, allowing our team to process and respond to your requests via our admin app. As clearly stated on the app screen before submission, your details are shared strictly for the purpose of providing customer support and resolving your queries.
+          </p>
+
+          <div class="callout" data-testid="no-affiliation-callout">
+            <p style="margin:0;">
+              <strong>1.7 No Government Affiliation.</strong> HPRC Scanner is an independent, third-party
+              productivity utility developed by MH Innovix. It is <strong>NOT</strong> affiliated with,
+              endorsed by, sponsored by, partnered with, or in any way connected to the
+              <em>West Bengal Board of Primary Education (WBBPE)</em>, the SMS Portal, or any state or
+              central government body, department or official portal. References to such portals exist solely
+              to describe interoperability.
+            </p>
+          </div>
+
+          <h3>1.8 Children's Data</h3>
+          <p>
+            HPRC Scanner is intended for use by <strong>educators, school administrators and authorised
+            adults</strong>. Although the data being digitised may pertain to minors enrolled in schools, that
+            data never leaves the educator's own device under our architecture. Educators are themselves the
+            data fiduciaries of the records they scan, and must comply with applicable laws including the
+            DPDP Act, 2023.
+          </p>
+
+          <h3>1.9 Your Choices</h3>
+          <p>
+            You may stop using the Service at any time by uninstalling the app. Account deletion requests
+            (which purge profile and subscription metadata) can be raised via the contact channel in
+            <a href="#contact">Section 04</a>.
+          </p>
+        </div>
+
+        <!-- ─── Section 2: Terms ─── -->
+        <div id="terms" class="reveal glass rounded-3xl p-7 sm:p-10 scroll-mt-28" data-testid="section-terms">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-[11px] uppercase tracking-[0.22em] theme-text-primary">Section 02</span>
+            <span class="h-px flex-1 bg-gradient-to-r from-orange-500/40 to-transparent"></span>
+          </div>
+          <h2>Terms of Service &amp; Subscription Rules</h2>
+          <p>
+            By installing, accessing or using HPRC Scanner, you (“the User”) enter into a binding legal
+            agreement with MH Innovix. If you do not accept any part of these Terms, you must immediately
+            cease using the Service.
+          </p>
+
+          <h3>2.1 Eligibility &amp; Authorised Use</h3>
+          <p>
+            The Service is licensed, not sold, to you on a non-exclusive, non-transferable, revocable basis
+            for lawful educational and administrative use only. You confirm that you are an adult, lawfully
+            authorised to handle the documents you choose to scan.
+          </p>
+
+          <h3>2.2 Subscription &amp; Scan-Limit Model</h3>
+          <p>
+            The Service operates on a <strong>“Scan Limit”</strong> model. Each successful AI extraction
+            consumes one unit from your scan-limit balance. Users may:
+          </p>
+          <ul>
+            <li>Utilise a complimentary <strong>daily free limit</strong> (subject to change at our sole discretion); or</li>
+            <li>Purchase additional limits or premium subscription tiers via <strong>Google Play In-App
+            Purchases (IAP)</strong>, which are governed additionally by Google Play's terms.</li>
+          </ul>
+
+          <div class="callout warn" data-testid="non-refundable-callout">
+            <p style="margin:0;">
+              <strong>2.3 Strictly Non-Refundable.</strong> All payments are made strictly in exchange for
+              the <em>AI text-extraction (scanning) service</em>. Once a scan-limit has been credited to your
+              account, the corresponding payment is <strong>final, fully earned and absolutely
+              non-refundable</strong> — irrespective of whether you ultimately consume the limit, change your
+              mind, switch devices, lose access, or face any third-party portal issue. By completing a
+              purchase you expressly waive any right to chargeback, dispute or refund on these grounds.
+            </p>
+          </div>
+
+          <h3>2.4 Third-Party Portal — Zero Liability</h3>
+          <p>
+            HPRC Scanner is a <strong>standalone extraction and auto-fill utility</strong>. We do not own,
+            operate, control, host or support the SMS Portal, the WBBPE portal or any external government
+            system. Accordingly, MH Innovix shall bear <strong>absolutely no liability</strong> in any of the
+            following scenarios, and no refunds, credits or compensation of any kind shall be issued for:
+          </p>
+          <ul>
+            <li>UI, schema, field or workflow changes deployed by the official portal that temporarily or permanently break compatibility with auto-fill;</li>
+            <li>Server downtime, throttling, rate-limiting, captchas, maintenance windows or login failures on the official portal;</li>
+            <li>Rejection of submitted data by the portal, marks held in “pending” state, mismatches or validation errors;</li>
+            <li>Suspension, blocking, throttling, IP-ban, account-lock or any disciplinary action against your user account, browser, device or IP by any portal operator on the grounds of using automation tooling, browser extensions or unofficial clients;</li>
+            <li>Loss of data, loss of submission window, missed deadlines or any consequential loss arising out of the foregoing.</li>
+          </ul>
+          <p>
+            You acknowledge that use of automation tooling against third-party portals may, in some
+            jurisdictions or under specific portal terms, be restricted. You assume <strong>sole and
+            exclusive responsibility</strong> for ensuring such use is compatible with the rules applicable to
+            you.
+          </p>
+
+          <h3>2.5 Acceptable Use</h3>
+          <p>You agree NOT to:</p>
+          <ul>
+            <li>Use the Service to process documents you are not lawfully authorised to handle;</li>
+            <li>Resell, redistribute, white-label, reverse-engineer, decompile or create derivative works of the app, extension or its underlying code;</li>
+            <li>Attempt to bypass, exhaust or fraudulently inflate the daily free limit through scripting, emulators, multiple accounts or any abusive technique;</li>
+            <li>Use the Service to commit, facilitate or conceal any unlawful act.</li>
+          </ul>
+
+          <div class="callout danger" data-testid="sensitive-id-callout">
+            <p style="margin:0;">
+              <strong>2.6 Strict Prohibition on Sensitive Identity Documents.</strong> You are
+              <strong>strictly prohibited</strong> from using HPRC Scanner to scan, photograph or process
+              highly sensitive government identity documents — including but not limited to
+              <em>Aadhaar cards, PAN cards, Passports, Voter IDs, Driving Licences</em> or any document
+              bearing equivalent identification numbers. Before scanning any register page, you must
+              <strong>physically mask, redact or crop out</strong> sensitive identification numbers. The
+              Developer shall not be liable, in any manner whatsoever, for any disclosure, leakage, misuse or
+              regulatory breach arising out of your failure to comply with this clause. Liability for such
+              negligence rests <strong>solely and exclusively with the User</strong>.
+            </p>
+          </div>
+
+          <h3>2.7 Suspension &amp; Termination</h3>
+          <p>
+            We may, at our sole discretion and without notice, suspend or terminate access to the Service if
+            we reasonably believe you have violated these Terms, abused the free tier, attempted to
+            circumvent IAP, or engaged in conduct that exposes us or other users to risk. Termination does
+            not entitle you to any refund.
+          </p>
+
+          <h3>2.8 Changes to the Terms</h3>
+          <p>
+            We may modify these Terms from time to time. Material changes will be reflected by updating the
+            “Last updated” date above. Continued use of the Service after such updates constitutes acceptance
+            of the revised Terms.
+          </p>
+
+          <h3>2.9 Governing Law &amp; Jurisdiction</h3>
+          <p>
+            These Terms shall be governed by the laws of India. Any dispute, controversy or claim arising
+            out of or in connection with these Terms shall be subject to the <strong>exclusive
+            jurisdiction</strong> of the competent courts located in the city of the Developer's registered
+            address.
+          </p>
+        </div>
+
+        <!-- ─── Section 3: Disclaimer ─── -->
+        <div id="disclaimer" class="reveal glass rounded-3xl p-7 sm:p-10 scroll-mt-28" data-testid="section-disclaimer">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-[11px] uppercase tracking-[0.22em] theme-text-primary">Section 03</span>
+            <span class="h-px flex-1 bg-gradient-to-r from-orange-500/40 to-transparent"></span>
+          </div>
+          <h2>Disclaimer &amp; Limitation of Liability</h2>
+
+          <h3>3.1 “AS IS” and “AS AVAILABLE”</h3>
+          <p>
+            The Service, including the mobile app, the PC browser extension, the AI extraction pipeline and
+            all related output, is provided strictly on an <strong>“AS IS”</strong> and
+            <strong>“AS AVAILABLE”</strong> basis, without warranties of any kind, whether express, implied,
+            statutory or otherwise. To the maximum extent permitted by applicable law, MH Innovix expressly
+            disclaims all warranties of <em>merchantability, fitness for a particular purpose,
+            non-infringement, accuracy, completeness, reliability, uninterrupted operation, security and
+            error-free performance</em>.
+          </p>
+
+          <div class="callout danger" data-testid="verify-callout">
+            <p style="margin:0;">
+              <strong>3.2 Mandatory Human Verification — AI is Prone to Errors.</strong> Optical Character
+              Recognition and AI-based extraction are inherently probabilistic technologies and may produce
+              <em>misreads, swapped digits, missed entries, hallucinated values or formatting errors</em>.
+              It is <strong>the User's sole, exclusive and non-delegable legal responsibility</strong> to
+              manually verify every AI-extracted value against the physical register
+              <strong>before</strong> submitting any data to any government portal or official record.
+              MH Innovix shall not be responsible for any incorrect, mis-graded, mis-attributed or otherwise
+              defective submission caused by reliance on un-verified AI output.
+            </p>
+          </div>
+
+          <h3>3.3 No Professional Advice</h3>
+          <p>
+            HPRC Scanner does not provide legal, regulatory, evaluation or examination-related professional
+            advice. The Service is a productivity utility only. Decisions on grading, evaluation, promotion,
+            attendance compliance or portal submission are made by you in your professional capacity.
+          </p>
+
+          <h3>3.4 Limitation of Liability</h3>
+          <p>
+            To the maximum extent permitted by law, in no event shall MH Innovix, its founders, directors,
+            employees, contractors or affiliates be liable for any
+            <strong>indirect, incidental, special, consequential, exemplary or punitive damages</strong>,
+            including without limitation loss of data, loss of marks, loss of submission windows, loss of
+            employment, loss of reputation, regulatory fines, or loss of business arising out of or related
+            to your use of, or inability to use, the Service — even if MH Innovix has been advised of the
+            possibility of such damages.
+          </p>
+          <p>
+            Where liability cannot lawfully be excluded, the aggregate liability of MH Innovix for all
+            claims, in aggregate, arising out of or relating to the Service shall be strictly limited to the
+            <strong>amounts actually paid by the User to MH Innovix in the three (3) months immediately
+            preceding the event giving rise to the claim</strong>, or INR 500, whichever is lower.
+          </p>
+
+          <h3>3.5 Indemnification</h3>
+          <p>
+            You agree to <strong>defend, indemnify and hold harmless</strong> MH Innovix and its
+            representatives from and against any and all claims, demands, losses, liabilities, damages,
+            costs and expenses (including reasonable attorneys' fees) arising out of or related to:
+            (a) your breach of these Terms; (b) your violation of any law or third-party right;
+            (c) your scanning of prohibited sensitive identity documents in contravention of Clause 2.6;
+            (d) your reliance on un-verified AI output in contravention of Clause 3.2; and (e) any portal
+            action taken against you for use of automation tooling.
+          </p>
+
+          <h3>3.6 Force Majeure</h3>
+          <p>
+            MH Innovix shall not be liable for any failure or delay in performance attributable to events
+            beyond its reasonable control, including but not limited to acts of God, network outages,
+            third-party API failures, regulatory action, or changes to upstream services (including the
+            Google Gemini API and any official portal).
+          </p>
+
+          <h3>3.7 Severability &amp; Survival</h3>
+          <p>
+            If any provision of these documents is held to be unenforceable, the remaining provisions shall
+            remain in full force and effect. Clauses relating to non-refundability, indemnification,
+            limitation of liability, prohibited use and governing law shall survive termination of your use
+            of the Service.
+          </p>
+        </div>
+
+        <!-- ─── Section 4: Contact ─── -->
+        <div id="contact" class="reveal glass rounded-3xl p-7 sm:p-10 scroll-mt-28" data-testid="section-contact">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-[11px] uppercase tracking-[0.22em] theme-text-primary">Section 04</span>
+            <span class="h-px flex-1 bg-gradient-to-r from-orange-500/40 to-transparent"></span>
+          </div>
+          <h2>Contact &amp; Grievance</h2>
+          <p>
+            Questions about this Privacy Policy, the Terms of Service or the Disclaimer can be addressed to
+            our team. We aim to respond to all reasonable enquiries within a commercially reasonable
+            timeframe.
+          </p>
+          <ul>
+            <li><strong>Developer:</strong> MH Innovix</li>
+            <li><strong>Email:</strong> <a href="mailto:mhinnovix@gmail.com" class="theme-hover-text-primary">mhinnovix@gmail.com</a></li>
+            <li><strong>App:</strong> <a href="https://play.google.com/store/apps/details?id=com.mhinnovix.hprcscanner" target="_blank" rel="noopener">HPRC Scanner on Google Play</a></li>
+          </ul>
+          <p class="text-xs text-gray-500 mt-6">
+            By continuing to use HPRC Scanner you confirm that you have read, understood and irrevocably
+            agreed to the Privacy Policy, the Terms of Service and the Disclaimer set out above in full.
+          </p>
+        </div>
+
+        <!-- back to top -->
+        <div class="reveal text-center pt-6">
+          <a href="#top" class="btn-primary" data-testid="back-to-top">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+            <span style="color: #000000;">Back to top</span>
+          </a>
+        </div>
+
+      </article>
+    </div>
+  </section>
+
+  <!-- ─────────── Footer ─────────── -->
+  <footer class="relative z-10 border-t border-white/5 py-10" data-testid="footer">
+   <div class="container-x flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div class="flex items-center gap-2.5">
+        <img src="https://mhinnovix.github.io/assets/HPRCScannerLogo.png" alt="HPRC Scanner Logo" class="w-7 h-7 rounded-lg object-contain bg-white/5" style="box-shadow:0 0 22px -2px rgba(var(--theme-primary-rgb),.6);">
+        <span class="font-display font-semibold text-white">HPRC Scanner || MH Innovix</span>
+      </div>
+      <div class="text-xs text-gray-500 flex flex-wrap items-center gap-x-5 gap-y-2">
+      <a href="../index.html" class="theme-hover-text-primary transition-colors" data-testid="footer-home">Home</a>
+        <a href="#privacy" class="theme-hover-text-primary transition-colors" data-testid="footer-privacy">Privacy</a>
+        <a href="#terms" class="theme-hover-text-primary transition-colors" data-testid="footer-terms">Terms</a>
+        <a href="#disclaimer" class="theme-hover-text-primary transition-colors" data-testid="footer-disclaimer">Disclaimer</a>
+        <a href="mailto:mhinnovix@gmail.com" class="theme-hover-text-primary transition-colors" data-testid="footer-contact">Contact</a>
+      </div>
+      <span class="text-xs text-gray-600">© <span id="year"></span> MH Innovix. All rights reserved.</span>
+    </div>
+  </footer>
+
+ <!-- ─────────── Scripts ─────────── -->
+  <script>
+    const fixedDate = new Date(2026, 6, 26); // 26th July, 2026
+
+    function formatLegalDate(date) {
+      const day = date.getDate();
+      const year = date.getFullYear();
+      const monthNames = ["January", "February", "March", "April", "May", "June",
+                          "July", "August", "September", "October", "November", "December"];
+      const month = monthNames[date.getMonth()];
+
+      let suffix = "th";
+      if (day === 1 || day === 21 || day === 31) suffix = "st";
+      else if (day === 2 || day === 22) suffix = "nd";
+      else if (day === 3 || day === 23) suffix = "rd";
+
+      return day + suffix + " " + month + ", " + year;
+    }
+    
+    const finalDateStr = formatLegalDate(fixedDate);
+    document.getElementById('effDate').textContent = finalDateStr;
+    document.getElementById('updDate').textContent = finalDateStr;
+    document.getElementById('year').textContent = fixedDate.getFullYear();
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) { entry.target.classList.add('in'); io.unobserve(entry.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // TOC active-link tracking
+    const tocLinks = document.querySelectorAll('#tocNav .toc-link');
+    const sections = ['privacy','terms','disclaimer','contact'].map(id => document.getElementById(id));
+    const sio = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          tocLinks.forEach(a => a.classList.remove('active'));
+          const id = entry.target.id;
+          const link = document.querySelector('#tocNav .toc-link[href="#' + id + '"]');
+          if (link) link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+    sections.forEach(s => s && sio.observe(s));
+
+    // ===== Ultra-Realistic Interactive Falling Star Canvas =====
+    (function () {
+      const canvas = document.getElementById('cometCanvas');
+      const ctx = canvas.getContext('2d');
+      let DPR = Math.min(window.devicePixelRatio || 1, 2);
+      let W = 0, H = 0;
+
+      const theme = window.__SELECTED_THEME__ || { hueRange: [20, 38], primaryRgb: '255, 107, 0' };
+
+      function resize() {
+        DPR = Math.min(window.devicePixelRatio || 1, 2);
+        W = window.innerWidth; H = window.innerHeight;
+        canvas.width = W * DPR; canvas.height = H * DPR;
+        canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      // Mouse tracking for dynamic celestial attraction & stardust
+      const mouse = { x: -1000, y: -1000 };
+      window.addEventListener('pointermove', (e) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+
+        if (Math.random() < 0.35) {
+          spawnStardust(mouse.x, mouse.y, (Math.random() - 0.5) * 1.5, (Math.random() - 0.5) * 1.5, 0.7);
+        }
+      });
+
+      // Scroll physics tracking
+      let lastScrollY = window.scrollY;
+      let scrollSpeed = 0;
+      let scrollTimer = null;
+      window.addEventListener('scroll', () => {
+        const dy = Math.abs(window.scrollY - lastScrollY);
+        lastScrollY = window.scrollY;
+        if (dy > 0) {
+          scrollSpeed = Math.min(1, scrollSpeed + dy / 80);
+        }
+
+        if (dy > 30 && Math.random() < 0.2 && meteors.length < 2) {
+          spawnMeteor(true);
+        }
+
+        clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(() => { scrollSpeed = 0; }, 80);
+      }, { passive: true });
+
+      const meteors = [];
+      const particles = [];
+
+      function spawnMeteor(isFastScroll = false) {
+        const dirSector = Math.floor(Math.random() * 3);
+        let angle;
+
+        if (dirSector === 0) {
+          angle = (Math.PI / 180) * (25 + Math.random() * 35);
+        } else if (dirSector === 1) {
+          angle = (Math.PI / 180) * (120 + Math.random() * 35);
+        } else {
+          angle = (Math.PI / 180) * (70 + Math.random() * 40);
+        }
+
+        const speed = (isFastScroll ? 2.8 + Math.random() * 2.2 : 1.0 + Math.random() * 1.3);
+        const vx = Math.cos(angle) * speed;
+        const vy = Math.sin(angle) * speed;
+
+        let startX, startY;
+        const edge = Math.random();
+
+        if (vx >= 0) {
+          if (edge < 0.65) {
+            startX = Math.random() * (W * 0.8) - 50;
+            startY = -70;
+          } else {
+            startX = -70;
+            startY = Math.random() * (H * 0.6);
+          }
+        } else {
+          if (edge < 0.65) {
+            startX = Math.random() * (W * 0.8) + (W * 0.2);
+            startY = -70;
+          } else {
+            startX = W + 70;
+            startY = Math.random() * (H * 0.6);
+          }
+        }
+
+        meteors.push({
+          x: startX,
+          y: startY,
+          vx: vx,
+          vy: vy,
+          length: 75 + Math.random() * 95,
+          radius: 1.8 + Math.random() * 1.4,
+          life: 1,
+          decay: 0.0015 + Math.random() * 0.0025,
+          angle: angle,
+          speed: speed
+        });
+      }
+
+      function spawnStardust(x, y, vx, vy, lifeMultiplier = 1) {
+        const hueMin = theme.hueRange[0];
+        const hueMax = theme.hueRange[1];
+        particles.push({
+          x: x + (Math.random() - 0.5) * 4,
+          y: y + (Math.random() - 0.5) * 4,
+          vx: vx + (Math.random() - 0.5) * 0.4,
+          vy: vy + (Math.random() - 0.5) * 0.4,
+          life: 1,
+          decay: (0.014 + Math.random() * 0.018) * lifeMultiplier,
+          size: 1.0 + Math.random() * 1.8,
+          hue: hueMin + Math.random() * (hueMax - hueMin),
+          twinkle: Math.random() * Math.PI
+        });
+      }
+
+      for (let i = 0; i < 1; i++) spawnMeteor();
+
+      function step() {
+        ctx.clearRect(0, 0, W, H);
+
+        scrollSpeed *= 0.93;
+
+        if (meteors.length < 2 && Math.random() < 0.008) {
+          spawnMeteor();
+        }
+
+        for (let i = meteors.length - 1; i >= 0; i--) {
+          const m = meteors[i];
+          
+          const currentSpeedMult = 1 + scrollSpeed * 1.1;
+          const curVx = m.vx * currentSpeedMult;
+          const curVy = m.vy * currentSpeedMult;
+
+          m.x += curVx;
+          m.y += curVy;
+          m.life -= m.decay * (1 + scrollSpeed);
+
+          const tailParticles = Math.floor(1 + scrollSpeed * 1.5);
+          for (let p = 0; p < tailParticles; p++) {
+            const frac = Math.random();
+            spawnStardust(
+              m.x - curVx * frac * 2.2,
+              m.y - curVy * frac * 2.2,
+              -curVx * 0.07 + (Math.random() - 0.5) * 0.5,
+              -curVy * 0.07 + (Math.random() - 0.5) * 0.5,
+              0.85
+            );
+          }
+
+          if (m.x < -180 || m.x > W + 180 || m.y > H + 180 || m.life <= 0) {
+            meteors.splice(i, 1);
+            continue;
+          }
+
+          const tailLen = m.length * (1 + scrollSpeed * 0.8);
+          const tailX = m.x - Math.cos(m.angle) * tailLen;
+          const tailY = m.y - Math.sin(m.angle) * tailLen;
+
+          const tailGrad = ctx.createLinearGradient(m.x, m.y, tailX, tailY);
+          tailGrad.addColorStop(0, `rgba(255, 255, 255, ${m.life * 0.95})`);
+          tailGrad.addColorStop(0.15, `rgba(${theme.primaryRgb}, ${m.life * 0.8})`);
+          tailGrad.addColorStop(0.5, `rgba(${theme.flareRgb || theme.primaryRgb}, ${m.life * 0.3})`);
+          tailGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+          ctx.lineWidth = m.radius * 2;
+          ctx.lineCap = 'round';
+          ctx.strokeStyle = tailGrad;
+          ctx.beginPath();
+          ctx.moveTo(m.x, m.y);
+          ctx.lineTo(tailX, tailY);
+          ctx.stroke();
+
+          const coreR = m.radius * (1 + scrollSpeed * 0.3);
+          const headGrad = ctx.createRadialGradient(m.x, m.y, 0, m.x, m.y, coreR * 5);
+          headGrad.addColorStop(0, `rgba(255, 255, 255, ${m.life})`);
+          headGrad.addColorStop(0.25, `rgba(${theme.primaryRgb}, ${m.life * 0.85})`);
+          headGrad.addColorStop(0.6, `rgba(${theme.primaryRgb}, ${m.life * 0.25})`);
+          headGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+          ctx.fillStyle = headGrad;
+          ctx.beginPath();
+          ctx.arc(m.x, m.y, coreR * 5, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.fillStyle = `rgba(255, 255, 255, ${m.life})`;
+          ctx.beginPath();
+          ctx.arc(m.x, m.y, coreR * 0.9, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        for (let i = particles.length - 1; i >= 0; i--) {
+          const p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.01;
+          p.life -= p.decay;
+          p.twinkle += 0.1;
+
+          if (p.life <= 0) {
+            particles.splice(i, 1);
+            continue;
+          }
+
+          const alpha = Math.max(0, p.life) * (0.7 + Math.sin(p.twinkle) * 0.3);
+          const r = p.size * p.life;
+
+          const pGrad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, r * 3.5);
+          pGrad.addColorStop(0, `hsla(${p.hue}, 100%, 75%, ${alpha})`);
+          pGrad.addColorStop(0.5, `hsla(${p.hue}, 100%, 55%, ${alpha * 0.4})`);
+          pGrad.addColorStop(1, `hsla(${p.hue}, 100%, 40%, 0)`);
+
+          ctx.fillStyle = pGrad;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, r * 3.5, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    })();
+  </script>
+</body>
+</html>
