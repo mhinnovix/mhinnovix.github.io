@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    body {transition: opacity ease-in 0.2s; } 
+    body[unresolved] {opacity: 0; display: block; overflow: hidden; position: relative; } 
+  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#030712">
+  <title>HPRC Scanner — AI Auto-Fill for School SMS Portals by MH Innovix</title>
+  <meta name="description" content="Stop typing 150+ marks manually! Scan handwritten HPRC registers and auto-fill your school's SMS portal via App, PC, or Bulk Upload in just 15 seconds.">
+
+  <!-- Random Theme Selector Script (Executes before render) -->
+  <script>
+    (function() {
+      const themes = [
+        {
+          name: 'Sunset orange',
+          primary: '#ff6b00',
+          primaryRgb: '255, 107, 0',
+          secondary: '#ffa500',
+          secondaryRgb: '255, 165, 0',
+          flare: '#ff3d00',
+          flareRgb: '255, 61, 0',
+          light: '#ffedd5',
+          hueRange: [20, 38]
+        },
+        {
+          name: 'Emerald green',
+          primary: '#10b981',
+          primaryRgb: '16, 185, 129',
+          secondary: '#34d399',
+          secondaryRgb: '52, 211, 153',
+          flare: '#059669',
+          flareRgb: '5, 150, 105',
+          light: '#d1fae5',
+          hueRange: [140, 165]
+        },
+        {
+          name: 'Crimson red',
+          primary: '#f43f5e',
+          primaryRgb: '244, 63, 94',
+          secondary: '#fb7185',
+          secondaryRgb: '251, 113, 133',
+          flare: '#e11d48',
+          flareRgb: '225, 29, 72',
+          light: '#ffe4e6',
+          hueRange: [345, 355]
+        },
+        {
+          name: 'Royal purple',
+          primary: '#a855f7',
+          primaryRgb: '168, 85, 247',
+          secondary: '#c084fc',
+          secondaryRgb: '192, 132, 252',
+          flare: '#7e22ce',
+          flareRgb: '126, 34, 206',
+          light: '#f3e8ff',
+          hueRange: [265, 285]
+        },
+        {
+          name: 'Classic blue',
+          primary: '#3b82f6',
+          primaryRgb: '59, 130, 246',
+          secondary: '#60a5fa',
+          secondaryRgb: '96, 165, 250',
+          flare: '#1d4ed8',
+          flareRgb: '29, 78, 216',
+          light: '#dbeafe',
+          hueRange: [210, 230]
+        }
+      ];
+
+      const selectedTheme = themes[Math.floor(Math.random() * themes.length)];
+      window.__SELECTED_THEME__ = selectedTheme;
+
+      const root = document.documentElement;
+      root.style.setProperty('--cosmic-orange', selectedTheme.primary);
+      root.style.setProperty('--cosmic-amber', selectedTheme.secondary);
+      root.style.setProperty('--cosmic-flare', selectedTheme.flare);
+      root.style.setProperty('--theme-primary-rgb', selectedTheme.primaryRgb);
+      root.style.setProperty('--theme-secondary-rgb', selectedTheme.secondaryRgb);
+      root.style.setProperty('--theme-flare-rgb', selectedTheme.flareRgb);
+      root.style.setProperty('--theme-light', selectedTheme.light);
+    })();
+  </script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #030712;
+      --cosmic-orange: #ff6b00;
+      --cosmic-amber: #ffa500;
+      --cosmic-flare: #ff3d00;
+      --theme-primary-rgb: 255, 107, 0;
+      --theme-secondary-rgb: 255, 165, 0;
+      --theme-flare-rgb: 255, 61, 0;
+      --theme-light: #ffedd5;
+      --border-soft: rgba(255,255,255,0.06);
+      --grid-line: rgba(255,255,255,0.045);
+      --text-mute: rgba(229,231,235,0.65);
+    }
+
+    * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    html, body {
+      background: var(--bg);
+      color: #e5e7eb;
+      font-family: 'Inter', system-ui, sans-serif;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+    h1, h2, h3, h4, .font-display { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.02em; }
+
+    /* ── Dynamic Utility Classes ────────────────────────── */
+    .theme-text-light { color: var(--theme-light); }
+    .theme-text-primary { color: var(--cosmic-orange); }
+    .theme-text-secondary { color: var(--cosmic-amber); }
+    .theme-bg-primary { background-color: var(--cosmic-orange); }
+    .theme-bg-secondary { background-color: var(--cosmic-amber); }
+    .theme-bg-flare { background-color: var(--cosmic-flare); }
+    .theme-hover-text-primary:hover { color: var(--cosmic-orange); }
+
+    /* ── Animated grid background ─────────────────────────── */
+    .grid-bg {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(var(--grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+      background-size: 60px 60px;
+      -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, #000 40%, transparent 90%);
+              mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, #000 40%, transparent 90%);
+      animation: gridShift 30s linear infinite;
+    }
+    @keyframes gridShift {
+      0%   { background-position: 0 0, 0 0; }
+      100% { background-position: 60px 60px, 60px 60px; }
+    }
+
+    /* ── Ambient Cosmic Orbs ─────────────────────────────────────── */
+    .orb {
+      position: fixed; border-radius: 9999px; filter: blur(130px);
+      opacity: 0.45; z-index: 0; pointer-events: none; will-change: transform;
+    }
+    .orb.a { width: 520px; height: 520px; background: var(--cosmic-orange); top: -120px; left: -120px; animation: float1 18s ease-in-out infinite; }
+    .orb.b { width: 460px; height: 460px; background: var(--cosmic-flare); bottom: -160px; right: -100px; opacity: .25; animation: float2 22s ease-in-out infinite; }
+    .orb.c { width: 380px; height: 380px; background: var(--cosmic-amber); top: 40%; left: 55%; opacity: .15; animation: float3 26s ease-in-out infinite; }
+    @keyframes float1 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(80px, 60px); } }
+    @keyframes float2 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-60px,-70px); } }
+    @keyframes float3 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(40px,-50px); } }
+
+    /* ── Canvas comet layer ───────────────────────────────── */
+    #cometCanvas {
+      position: fixed; inset: 0; z-index: 1; pointer-events: none;
+    }
+
+    /* ── Glassmorphism ────────────────────────────────────── */
+    .glass {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border-soft);
+      backdrop-filter: blur(18px) saturate(140%);
+      -webkit-backdrop-filter: blur(18px) saturate(140%);
+    }
+    .glass-strong {
+      background: rgba(10,12,20,0.6);
+      border: 1px solid rgba(255,255,255,0.07);
+      backdrop-filter: blur(22px) saturate(160%);
+      -webkit-backdrop-filter: blur(22px) saturate(160%);
+    }
+
+    /* ── Cosmic Shimmering Gradient Text ─────────────────────────── */
+    .shimmer-text {
+      background: linear-gradient(110deg, #ffffff 30%, var(--cosmic-orange) 48%, var(--cosmic-amber) 58%, #ffffff 75%);
+      background-size: 200% 100%;
+      -webkit-background-clip: text; background-clip: text;
+      color: transparent;
+      animation: shimmer 6s linear infinite;
+      filter: drop-shadow(0 0 24px rgba(var(--theme-primary-rgb),0.25));
+    }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+    .glow-orange { box-shadow: 0 0 0 1px rgba(var(--theme-primary-rgb),0.25), 0 0 40px -6px rgba(var(--theme-primary-rgb),0.5); }
+    .glow-amber  { box-shadow: 0 0 0 1px rgba(var(--theme-secondary-rgb),0.25), 0 0 40px -6px rgba(var(--theme-secondary-rgb),0.5); }
+
+    /* ── Buttons ──────────────────────────────────────────── */
+    .btn-primary {
+      position: relative; display: inline-flex; align-items: center; gap: .5rem;
+      padding: .85rem 1.4rem; border-radius: 9999px;
+      background: linear-gradient(135deg, var(--cosmic-orange) 0%, var(--cosmic-flare) 100%);
+      color: #040200; font-weight: 600; letter-spacing: -0.01em;
+      transition: transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .5s cubic-bezier(.2,.8,.2,1), filter .3s;
+      box-shadow: 0 0 0 1px rgba(var(--theme-primary-rgb),0.4), 0 10px 30px -8px rgba(var(--theme-primary-rgb),0.55);
+    }
+    .btn-primary:hover { transform: translateY(-2px) scale(1.02); filter: brightness(1.12); box-shadow: 0 0 0 1px rgba(var(--theme-primary-rgb),0.6), 0 18px 40px -8px rgba(var(--theme-primary-rgb),0.75); }
+
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .85rem 1.4rem; border-radius: 9999px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #e5e7eb; font-weight: 500;
+      transition: transform .5s cubic-bezier(.2,.8,.2,1), background .3s, border-color .3s;
+    }
+    .btn-ghost:hover { transform: translateY(-2px); background: rgba(255,255,255,0.07); border-color: rgba(var(--theme-primary-rgb),0.4); }
+
+    .btn-pill-orange {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .55rem 1rem; border-radius: 9999px;
+      background: rgba(var(--theme-primary-rgb),0.08);
+      border: 1px solid rgba(var(--theme-primary-rgb),0.35);
+      color: var(--theme-light); font-size: .85rem; font-weight: 500;
+      transition: transform .5s cubic-bezier(.2,.8,.2,1), background .3s, box-shadow .3s;
+    }
+    .btn-pill-orange:hover { transform: translateY(-1px); background: rgba(var(--theme-primary-rgb),0.14); box-shadow: 0 0 24px -6px rgba(var(--theme-primary-rgb),0.6); }
+
+    /* ── Spotlight card (JS sets --mx/--my CSS vars) ─────── */
+    .spotlight-card {
+      position: relative; overflow: hidden;
+      transition: transform .5s cubic-bezier(.2,.8,.2,1), border-color .5s, box-shadow .5s;
+    }
+    .spotlight-card::before {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 50%), rgba(var(--theme-primary-rgb),0.12), transparent 45%);
+      opacity: 0; transition: opacity .35s ease;
+    }
+    .spotlight-card:hover::before { opacity: 1; }
+    .spotlight-card:hover { transform: translateY(-6px) scale(1.012); border-color: rgba(var(--theme-primary-rgb),0.3); box-shadow: 0 30px 60px -20px rgba(var(--theme-primary-rgb),0.3); }
+
+    .spotlight-card.amber::before { background: radial-gradient(380px circle at var(--mx,50%) var(--my,50%), rgba(var(--theme-secondary-rgb),0.12), transparent 45%); }
+    .spotlight-card.amber:hover { border-color: rgba(var(--theme-secondary-rgb),0.35); box-shadow: 0 30px 60px -20px rgba(var(--theme-secondary-rgb),0.3); }
+
+    /* ── Custom Horizontal Stick Range Slider ───────────────── */
+    input[type=range].theme-slider {
+      -webkit-appearance: none;
+      width: 100%;
+      background: transparent;
+    }
+    input[type=range].theme-slider:focus {
+      outline: none;
+    }
+    input[type=range].theme-slider::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 12px;
+      cursor: pointer;
+      background: rgba(255,255,255,0.08);
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    input[type=range].theme-slider::-webkit-slider-thumb {
+      height: 28px;
+      width: 28px;
+      border-radius: 50%;
+      background: var(--cosmic-orange);
+      cursor: pointer;
+      -webkit-appearance: none;
+      margin-top: -8px;
+      box-shadow: 0 0 20px rgba(var(--theme-primary-rgb), 0.9), 0 0 0 5px rgba(var(--theme-primary-rgb), 0.25);
+      transition: transform 0.15s ease, background-color 0.3s ease;
+    }
+    input[type=range].theme-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+    }
+    input[type=range].theme-slider::-moz-range-track {
+      width: 100%;
+      height: 12px;
+      cursor: pointer;
+      background: rgba(255,255,255,0.08);
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    input[type=range].theme-slider::-moz-range-thumb {
+      height: 28px;
+      width: 28px;
+      border-radius: 50%;
+      background: var(--cosmic-orange);
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(var(--theme-primary-rgb), 0.9), 0 0 0 5px rgba(var(--theme-primary-rgb), 0.25);
+    }
+
+    /* ── Scroll reveal ────────────────────────────────────── */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .9s cubic-bezier(.2,.8,.2,1), transform .9s cubic-bezier(.2,.8,.2,1); }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    /* ── Icon tile ────────────────────────────────────────── */
+    .icon-tile {
+      width: 56px; height: 56px; border-radius: 16px;
+      display: grid; place-items: center;
+      background: rgba(var(--theme-primary-rgb),0.08);
+      border: 1px solid rgba(var(--theme-primary-rgb),0.25);
+      box-shadow: inset 0 0 24px rgba(var(--theme-primary-rgb),0.15), 0 0 30px -6px rgba(var(--theme-primary-rgb),0.4);
+    }
+    .icon-tile.amber { background: rgba(var(--theme-secondary-rgb),0.08); border-color: rgba(var(--theme-secondary-rgb),0.3); box-shadow: inset 0 0 24px rgba(var(--theme-secondary-rgb),0.18), 0 0 30px -6px rgba(var(--theme-secondary-rgb),0.45); }
+
+    /* ── Pulse dot ────────────────────────────────────────── */
+    .pulse-dot { position: relative; width: 8px; height: 8px; border-radius: 999px; background: var(--cosmic-orange); }
+    .pulse-dot::after { content: ""; position: absolute; inset: -4px; border-radius: 999px; border: 1px solid rgba(var(--theme-primary-rgb),0.6); animation: pulse 2s ease-out infinite; }
+    @keyframes pulse { 0% { transform: scale(.6); opacity: 1; } 100% { transform: scale(1.8); opacity: 0; } }
+
+    /* Custom scrollbar matching theme */
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: #07090f; }
+    ::-webkit-scrollbar-thumb { background: rgba(var(--theme-primary-rgb),0.15); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(var(--theme-primary-rgb),0.3); }
+
+    .container-x { max-width: 1200px; margin: 0 auto; padding-left: 1.25rem; padding-right: 1.25rem; }
+    .hero-drop { text-shadow: 0 10px 60px rgba(var(--theme-primary-rgb),0.15); }
+
+    .nav-link { position: relative; transition: color .3s; }
+    .nav-link::after { content:""; position:absolute; left: 0; bottom:-4px; width:100%; height:1px; background: linear-gradient(90deg, transparent, var(--cosmic-orange), transparent); transform: scaleX(0); transform-origin: center; transition: transform .35s ease; }
+    .nav-link:hover { color: #fff; }
+    .nav-link:hover::after { transform: scaleX(1); }
+  </style>
+</head>
+<body class="relative">
+
+  <div class="grid-bg" aria-hidden="true"></div>
+  <div class="orb a" aria-hidden="true"></div>
+  <div class="orb b" aria-hidden="true"></div>
+  <div class="orb c" aria-hidden="true"></div>
+  <canvas id="cometCanvas" aria-hidden="true"></canvas>
+
+  <header class="fixed top-0 inset-x-0 z-50" data-testid="navbar">
+    <div class="container-x mt-4">
+      <nav class="glass-strong rounded-full px-4 sm:px-6 py-3 flex items-center justify-between">
+        <a href="#" class="flex items-center gap-2.5" data-testid="nav-logo">
+          <img src="https://mhinnovix.github.io/assets/HPRCScannerLogo.png" alt="HPRC Scanner Logo" class="w-8 h-8 rounded-xl object-contain bg-white/5" style="box-shadow:0 0 22px -2px rgba(var(--theme-primary-rgb),.6);">
+          <span class="font-display font-semibold tracking-tight text-white">HPRC Scanner</span>
+        </a>
+
+        <div class="hidden md:flex items-center gap-7 text-sm text-gray-300">
+          <a href="#how-it-works" class="nav-link" data-testid="nav-how">How it works</a>
+          <a href="#methods" class="nav-link" data-testid="nav-methods">Upload Methods</a>
+          <a href="#calculator" class="nav-link" data-testid="nav-calculator">Time Savings</a>
+          <a href="#features" class="nav-link" data-testid="nav-features">Benefits</a>
+          <a href="https://mhinnovix.github.io/hprcscanner/legal" class="nav-link" data-testid="nav-legal">Privacy & Legal</a>
+          <a href="#contact" class="nav-link" data-testid="nav-contact">Contact</a>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <a href="https://mhinnovix.github.io/hprcscanner/extension.zip" download="" class="btn-pill-orange hidden sm:inline-flex text-sm" data-testid="nav-get-extension">
+            Get Extension
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M5 21h14"></path></svg>
+          </a>
+          <a href="https://play.google.com/store/apps/details?id=com.mhinnovix.hprcscanner" target="_blank" rel="noopener" class="btn-primary text-sm" data-testid="nav-get-app">
+            Get App
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+          </a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <section class="relative z-10 pt-28 sm:pt-32 pb-14 sm:pb-18" data-testid="hero">
+    <div class="container-x text-center">
+      
+      <div class="reveal mx-auto mb-10 flex justify-center" data-testid="hero-logo">
+        <img 
+          src="https://mhinnovix.github.io/assets/HPRCScannerLogo.png" 
+          alt="HPRC Scanner App Logo" 
+          class="w-24 h-24 rounded-3xl object-contain bg-white/5 p-2"
+          style="box-shadow: 0 0 50px 0px rgba(var(--theme-primary-rgb),0.5);"
+        >
+      </div>
+
+      <div class="reveal inline-flex items-center gap-2 glass rounded-full px-4 py-2 mb-8 glow-orange" data-testid="hero-badge">
+        <span class="pulse-dot"></span>
+        <span class="text-xs sm:text-sm theme-text-light tracking-wide">The Ultimate Solution for Class 1 to 8 Teachers</span>
+      </div>
+
+      <h1 class="reveal font-display font-bold text-4xl sm:text-6xl lg:text-7xl leading-[1.05] hero-drop" data-testid="hero-heading">
+        <span class="shimmer-text">Auto-Fill SMS Portal</span><br>
+        <span class="text-white">in <span class="shimmer-text">Just 15 Seconds</span></span>
+      </h1>
+
+      <p class="reveal mt-7 max-w-2xl mx-auto text-base sm:text-lg text-gray-400 leading-relaxed" data-testid="hero-subtext">
+        Say goodbye to manually typing 150+ marks per student! Built specifically for Class 1 to 8 teachers, our app lets you simply snap a picture of your HPRC Register pages. It instantly saves the data and auto-fills the school's SMS portal in a single click. From 10 minutes to 15 seconds—zero manual typing.
+      </p>
+
+      <div class="reveal mt-10 flex flex-wrap items-center justify-center gap-3" data-testid="hero-ctas">
+        <a href="https://play.google.com/store/apps/details?id=com.mhinnovix.hprcscanner" target="_blank" rel="noopener" class="btn-primary" data-testid="hero-cta-download">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M5 21h14"></path></svg>
+          Download App Now
+        </a>
+        <a href="https://mhinnovix.github.io/hprcscanner/extension.zip" download="" class="btn-ghost" data-testid="hero-cta-extension">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M5 21h14"></path></svg>
+          Download Extension
+        </a>
+        <a href="#methods" class="btn-ghost" data-testid="hero-cta-how">
+          See Upload Methods
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+        </a>
+      </div>
+
+     <div class="reveal mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs text-gray-500" data-testid="hero-trust">
+        <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full theme-bg-primary"></span> 1-Click Auto Fill</span>
+        <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full theme-bg-secondary"></span> 3 Upload Methods</span>
+        <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full theme-bg-flare"></span> 100% Accurate OCR</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="how-it-works" class="relative z-10 py-20 sm:py-24" data-testid="how-section">
+    <div class="container-x">
+      <div class="text-center mb-12 reveal">
+        <span class="text-xs uppercase tracking-[0.25em] theme-text-primary">Step 01 — The Scan</span>
+        <h2 class="font-display text-3xl sm:text-5xl font-bold mt-3 text-white">Capture Marks Instantly!</h2>
+      </div>
+
+      <div class="reveal max-w-3xl mx-auto glass spotlight-card rounded-3xl p-8 sm:p-12 text-center" data-testid="step-one-card">
+        <div class="mx-auto icon-tile mb-7" style="width:84px;height:84px;border-radius:22px;">
+          <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="var(--theme-light)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+            <circle cx="12" cy="13" r="4"></circle>
+          </svg>
+        </div>
+        <h3 class="font-display text-2xl sm:text-3xl font-semibold text-white mb-4">Smart HPRC Vision Tech</h3>
+        <p class="text-gray-400 max-w-xl mx-auto leading-relaxed">
+          Open the app and take a picture of the student's page. Our AI instantly detects and reads all 150+ handwritten mark boxes, saving the complete data securely inside the app without a single keystroke.
+        </p>
+        <div class="mt-8 flex flex-wrap justify-center gap-2 text-xs">
+          <span class="px-3 py-1 rounded-full glass border border-white/10 text-gray-300">Fast Handwriting OCR</span>
+          <span class="px-3 py-1 rounded-full glass border border-white/10 text-gray-300">Grid Detection</span>
+          <span class="px-3 py-1 rounded-full glass border border-white/10 text-gray-300">Secure Local Save</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="methods" class="relative z-10 py-20 sm:py-24" data-testid="methods-section">
+    <div class="container-x">
+      <div class="text-center mb-14 reveal">
+        <span class="text-xs uppercase tracking-[0.25em] theme-text-primary">Step 02 — Upload to SMS Portal</span>
+        <h2 class="font-display text-3xl sm:text-5xl font-bold mt-3 text-white">Three Flexible Ways to Fill Marks!</h2>
+        <p class="text-gray-400 max-w-xl mx-auto mt-4">Scan once, then upload to the SMS portal using the method you prefer.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6 items-stretch">
+
+        <article class="reveal glass spotlight-card amber rounded-3xl p-7 flex flex-col" data-testid="method-mobile">
+          <div class="icon-tile amber mb-6">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--theme-light)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="3"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+          </div>
+          <h3 class="font-display text-xl font-semibold text-white mb-2">App Live Entry</h3>
+          <p class="text-gray-400 text-sm leading-relaxed flex-1">
+            Open the SMS portal directly within our app. Select the class, section, and subject, then simply hit the <b>"Auto Fill"</b> button. The app instantly populates the portal table with your scanned marks.
+          </p>
+          <ul class="text-xs text-gray-500 mt-5 mb-6 space-y-2">
+            <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full theme-bg-primary"></span> 1-click mobile auto-fill</li>
+            <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full theme-bg-primary"></span> Integrated web browser</li>
+            <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full theme-bg-primary"></span> No manual typing needed</li>
+          </ul>
+          
+          <div class="mt-auto pt-4 border-t border-white/5 flex flex-wrap items-center gap-4 text-sm font-medium">
+            <a href="https://mhinnovix.github.io/hprcscanner/inapp-live-entry" class="theme-text-primary theme-hover-text-primary transition-colors flex items-center gap-1.5">
+              See Process <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+            <a href="https://youtu.be/mNxtDX83mKs?si=MRdjUt7CqF_1EPWE" target="_blank" rel="noopener" class="theme-text-primary theme-hover-text-primary transition-colors flex items-center gap-1.5">
+              Watch Tutorial <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            </a>
+          </div>
+        </article>
+
+        <article class="reveal glass spotlight-card rounded-3xl p-7 flex flex-col" data-testid="method-pc">
+          <div class="icon-tile mb-6">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--theme-light)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+          </div>
+          <h3 class="font-display text-xl font-semibold text-white mb-2">PC Live Entry</h3>
+          <p class="text-gray-400 text-sm leading-relaxed flex-1">
+            Connect your phone to our browser extension using a secure code. Your scanned data syncs instantly, allowing you to open the SMS portal in your browser and auto-fill the table with a single click.
+          </p>
+          <ul class="text-xs text-gray-500 mt-5 mb-6 space-y-2">
+            <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full theme-bg-primary"></span> Secure code pairing</li>
+            <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full theme-bg-primary"></span> Real-time data sync</li>
+            <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full theme-bg-primary"></span> Seamless desktop workflow</li>
+          </ul>
+
+          <div class="mt-auto pt-4 border-t border-white/5 flex flex-wrap items-center gap-4 text-sm font-medium">
+            <a href="https://mhinnovix.github.io/hprcscanner/pc-live-entry" class="theme-text-primary theme-hover-text-primary transition-colors flex items-center gap-1.5">
+              See Process <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+            <a href="https://youtube.com/watch?v=demo" target="_blank" rel="noopener" class="theme-text-primary theme-hover-text-primary transition-colors flex items-center gap-1.5">
+              Watch Tutorial <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            </a>
+          </div>
+        </article>
+
+        <article class="reveal glass spotlight-card amber rounded-3xl p-7 flex flex-col" data-testid="method-bulk">
+          <div class="icon-tile amber mb-6">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--theme-light)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><polyline points="9 15 12 18 15 15"></polyline></svg>
+          </div>
+          <h3 class="font-display text-xl font-semibold text-white mb-2">Bulk Excel Entry</h3>
+          <p class="text-gray-400 text-sm leading-relaxed flex-1">
+            Simply download the blank template from the SMS portal and load it into our app. We'll instantly fill the file with your data, ready for you to upload directly to the portal. No in-app browser required.
+          </p>
+          <ul class="text-xs text-gray-500 mt-5 mb-6 space-y-2">
+            <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full theme-bg-secondary"></span> No in-app browser needed</li>
+            <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full theme-bg-secondary"></span> Uses official portal templates</li>
+            <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full theme-bg-secondary"></span> Perfect for massive uploads</li>
+          </ul>
+
+          <div class="mt-auto pt-4 border-t border-white/5 flex flex-wrap items-center gap-4 text-sm font-medium">
+            <a href="https://mhinnovix.github.io/hprcscanner/bulk-excel-entry/" class="theme-text-primary theme-hover-text-primary transition-colors flex items-center gap-1.5">
+              See Process <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+           <a href="https://youtu.be/QSreENwEYyA" target="_blank" rel="noopener" class="theme-text-primary theme-hover-text-primary transition-colors flex items-center gap-1.5">
+              Watch Tutorial <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Interactive Time Savings & Year-End Calculator Section ───────────────── -->
+  <section id="calculator" class="relative z-10 py-20 sm:py-24 border-t border-white/5" data-testid="calculator-section">
+    <div class="container-x">
+      <div class="text-center mb-14 reveal">
+        <span class="text-xs uppercase tracking-[0.25em] theme-text-primary">Time & Efficiency Calculator</span>
+        <h2 class="font-display text-3xl sm:text-5xl font-bold mt-3 text-white">Calculate Your Massive Time Savings! (Year-End)</h2>
+        <p class="text-gray-400 max-w-xl mx-auto mt-4">Drag the horizontal slider stick to set your student count and see how many hours HPRC Scanner saves you by year-end.</p>
+      </div>
+
+      <div class="grid lg:grid-cols-12 gap-8 items-stretch">
+        <!-- Slider Stick Controls (Left Card) -->
+        <div class="lg:col-span-6 reveal glass spotlight-card rounded-3xl p-8 sm:p-10 flex flex-col justify-between" data-testid="calc-slider-card">
+          <div>
+            <div class="flex items-center justify-between mb-6">
+              <div>
+                <span class="text-xs font-semibold uppercase tracking-wider text-gray-400">Total Students</span>
+                <h3 class="font-display text-3xl font-bold text-white mt-1 flex items-baseline gap-2">
+                  <span id="studentCountDisplay" class="shimmer-text text-4xl font-extrabold">50</span>
+                  <span class="text-base text-gray-400 font-normal">Students</span>
+                </h3>
+              </div>
+              <div class="icon-tile" style="width:48px;height:48px;border-radius:14px;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--theme-light)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              </div>
+            </div>
+
+            <!-- Horizontal Range Stick Slider -->
+            <div class="my-8">
+              <div class="flex justify-between text-xs text-gray-400 mb-3 font-medium">
+                <span>10 Students</span>
+                <span>150 Students</span>
+                <span>300 Students</span>
+              </div>
+              <input type="range" min="10" max="300" value="50" step="5" id="studentSlider" class="theme-slider" data-testid="student-range-stick">
+            </div>
+
+            <!-- Quick Preset Buttons -->
+            <div class="flex flex-wrap items-center gap-2 mt-6">
+              <span class="text-xs text-gray-500 mr-2 font-medium">Quick Select:</span>
+              <button onclick="setStudentPreset(25)" class="px-3 py-1.5 rounded-full text-xs glass border border-white/10 hover:border-white/30 text-gray-300 transition-all font-medium">25 Students</button>
+              <button onclick="setStudentPreset(50)" class="px-3 py-1.5 rounded-full text-xs glass border border-white/10 hover:border-white/30 text-gray-300 transition-all font-medium">50 Students</button>
+              <button onclick="setStudentPreset(100)" class="px-3 py-1.5 rounded-full text-xs glass border border-white/10 hover:border-white/30 text-gray-300 transition-all font-medium">100 Students</button>
+              <button onclick="setStudentPreset(200)" class="px-3 py-1.5 rounded-full text-xs glass border border-white/10 hover:border-white/30 text-gray-300 transition-all font-medium">200 Students</button>
+            </div>
+          </div>
+          
+          <div class="mt-8 pt-6 border-t border-white/5 text-xs text-gray-500 flex items-center gap-2">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            Based on 150+ handwritten marks per student (8.5 mins manual vs 15 secs app).
+          </div>
+        </div>
+
+        <!-- Calculated Time Comparison & Year-End Savings (Right Column Container) -->
+        <div class="lg:col-span-6 flex flex-col justify-between gap-4 reveal" data-testid="calc-results font-medium">
+          
+          <div class="grid grid-cols-2 gap-4">
+            <!-- Manual Time -->
+            <div class="glass rounded-2xl p-5 border border-red-500/20">
+              <span class="text-xs uppercase tracking-wider text-red-400 font-semibold flex items-center gap-1.5">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                Manual Entry Time
+              </span>
+              <div id="manualTimeDisplay" class="text-2xl sm:text-3xl font-bold text-red-200 mt-2 font-display">7 hrs 5 mins</div>
+              <p class="text-[11px] text-gray-400 mt-1">Typing 150+ marks manually</p>
+            </div>
+
+            <!-- App Time -->
+            <div class="glass rounded-2xl p-5 border border-emerald-500/20">
+              <span class="text-xs uppercase tracking-wider text-emerald-400 font-semibold flex items-center gap-1.5">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                HPRC Scanner Time
+              </span>
+              <div id="appTimeDisplay" class="text-2xl sm:text-3xl font-bold text-emerald-200 mt-2 font-display">12 mins 30 secs</div>
+              <p class="text-[11px] text-gray-400 mt-1">1-Click Auto Fill</p>
+            </div>
+          </div>
+
+          <!-- Overall Time Saved (Year End) — HEAVILY HIGHLIGHTED HERO CARD -->
+          <div class="spotlight-card rounded-3xl p-7 sm:p-8 flex-1 flex flex-col justify-between relative overflow-hidden" 
+               style="background: linear-gradient(135deg, rgba(var(--theme-primary-rgb),0.16) 0%, rgba(var(--theme-secondary-rgb),0.06) 100%); border: 2px solid var(--cosmic-orange); box-shadow: 0 0 45px -8px rgba(var(--theme-primary-rgb),0.55), inset 0 0 30px rgba(var(--theme-primary-rgb),0.2);">
+            
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <span class="text-xs font-bold uppercase tracking-widest text-amber-300 flex items-center gap-2">
+                  <span class="pulse-dot"></span>
+                  Overall Time Saved (Year End)
+                </span>
+                <span class="px-3.5 py-1.5 rounded-full text-xs font-black theme-bg-primary text-black shadow-lg shadow-black/40 uppercase tracking-wider">
+                  ⚡ 97% Faster
+                </span>
+              </div>
+              
+              <div class="mt-4 mb-2">
+                <div id="savedTimeDisplay" class="font-display text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight shimmer-text drop-shadow-[0_0_35px_rgba(var(--theme-primary-rgb),0.85)]">
+                  6 hrs 52 mins
+                </div>
+              </div>
+            </div>
+
+            <div class="text-xs sm:text-sm text-gray-300 font-medium leading-relaxed border-t border-white/10 pt-4 mt-6 flex items-center justify-between">
+              <span>Total cumulative hours saved by year end for your teaching staff!</span>
+              <span class="text-lg">🎉</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" class="relative z-10 py-20 sm:py-24" data-testid="features-section">
+    <div class="container-x">
+      <div class="text-center mb-14 reveal">
+        <span class="text-xs uppercase tracking-[0.25em] theme-text-primary">Step 03 — The Magic</span>
+        <h2 class="font-display text-3xl sm:text-5xl font-bold mt-3 text-white">Why Teachers Love It?</h2>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        
+        <div class="reveal glass spotlight-card rounded-2xl p-6" data-testid="feat-time">
+          <div class="icon-tile mb-5" style="width:44px;height:44px;border-radius:12px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--theme-light)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          </div>
+          <h4 class="font-display text-lg font-semibold text-white">Massive Time Saver</h4>
+          <p class="text-sm text-gray-400 mt-2">What used to take 8-10 minutes of grueling, repetitive typing per student now takes a mere 15 to 20 seconds.</p>
+        </div>
+
+        <div class="reveal glass spotlight-card rounded-2xl p-6" data-testid="feat-cloud">
+          <div class="icon-tile mb-5" style="width:44px;height:44px;border-radius:12px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--theme-light)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          </div>
+          <h4 class="font-display text-lg font-semibold text-white">Server Crash Proof</h4>
+          <p class="text-sm text-gray-400 mt-2">Website session expired? No problem! The app saves your data locally, just click "Auto Fill" again to instantly recover everything.</p>
+        </div>
+
+        <div class="reveal glass spotlight-card rounded-2xl p-6" data-testid="feat-eye">
+          <div class="icon-tile mb-5" style="width:44px;height:44px;border-radius:12px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--theme-light)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+          </div>
+          <h4 class="font-display text-lg font-semibold text-white">Zero Eye Strain</h4>
+          <p class="text-sm text-gray-400 mt-2">No more squinting back and forth between a physical khata and your screen to type 150+ separate boxes manually.</p>
+        </div>
+
+        <div class="reveal glass spotlight-card rounded-2xl p-6" data-testid="feat-pdf">
+          <div class="icon-tile mb-5" style="width:44px;height:44px;border-radius:12px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--theme-light)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          </div>
+          <h4 class="font-display text-lg font-semibold text-white">Digital PDF & CSV Records</h4>
+          <p class="text-sm text-gray-400 mt-2">Generate and download a clean, structured PDF copy or an editable CSV file of your scanned marks for personal use, offline backup, or printing.</p>
+        </div>
+
+        <div class="reveal glass spotlight-card rounded-2xl p-6" data-testid="feat-ui">
+          <div class="icon-tile mb-5" style="width:44px;height:44px;border-radius:12px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--theme-light)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 4.2c.86.63 1.34 1.63 1.34 2.7v6.82a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-6.82c0-1.07.48-2.07 1.34-2.7L12 2.69z"></path></svg>
+          </div>
+          <h4 class="font-display text-lg font-semibold text-white">Modern UI & Themes</h4>
+          <p class="text-sm text-gray-400 mt-2">Experience a highly advanced, super-smooth interface. Random theme color selection on every load.</p>
+        </div>
+
+        <div class="reveal glass spotlight-card rounded-2xl p-6" data-testid="feat-login">
+          <div class="icon-tile mb-5" style="width:44px;height:44px;border-radius:12px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--theme-light)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"></path><path d="M12 12v9"></path><path d="m8 17 4 4 4-4"></path></svg>
+          </div>
+          <h4 class="font-display text-lg font-semibold text-white">Google Cloud Login</h4>
+          <p class="text-sm text-gray-400 mt-2">Securely log in via Google. Your basic details and settings are safely synced to our database and restore instantly upon re-login.</p>
+        </div>
+
+        <div class="reveal glass spotlight-card rounded-2xl p-6" data-testid="feat-formats">
+          <div class="icon-tile mb-5" style="width:44px;height:44px;border-radius:12px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--theme-light)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="3" x2="12" y2="21"></line><path d="M8 12h8"></path></svg>
+          </div>
+          <h4 class="font-display text-lg font-semibold text-white">Dual Format Scanning</h4>
+          <p class="text-sm text-gray-400 mt-2">Whether your school uses standard or extended HPRC khata layouts, our smart AI flawlessly recognizes and scans both page formats.</p>
+        </div>
+
+        <div class="reveal glass spotlight-card rounded-2xl p-6" data-testid="feat-pc-entry">
+          <div class="icon-tile mb-5" style="width:44px;height:44px;border-radius:12px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--theme-light)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+          </div>
+          <h4 class="font-display text-lg font-semibold text-white">PC Live Entry & Extension</h4>
+          <p class="text-sm text-gray-400 mt-2">Pair your phone with our browser extension to seamlessly auto-fill marks directly from your desktop computer with 1-click real-time sync.</p>
+        </div>
+
+        <div class="reveal glass spotlight-card rounded-2xl p-6" data-testid="feat-backup">
+          <div class="icon-tile mb-5" style="width:44px;height:44px;border-radius:12px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--theme-light)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+          </div>
+          <h4 class="font-display text-lg font-semibold text-white">Offline Backup & Restore</h4>
+          <p class="text-sm text-gray-400 mt-2">Keep your data safe with our robust offline-based backup and restore system. Easily save and retrieve your records anytime without the internet.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact" class="relative z-10 mt-16 border-t border-white/5 py-12" data-testid="footer">
+    <div class="container-x">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+        <div>
+          <div class="flex items-center gap-2.5">
+            <img src="https://mhinnovix.github.io/assets/HPRCScannerLogo.png" alt="HPRC Scanner Logo" class="w-7 h-7 rounded-lg object-contain bg-white/5" style="box-shadow:0 0 22px -2px rgba(var(--theme-primary-rgb),.6);">
+            <span class="font-display font-semibold text-white">HPRC Scanner || MH Innovix</span>
+          </div>
+          <p class="text-xs text-gray-500 mt-3 max-w-sm">HPRC Scanner — Solving the biggest headache for teachers.</p>
+          <a href="mailto:mhinnovix@gmail.com" class="block mt-2 text-sm text-gray-400 theme-hover-text-primary transition-colors" data-testid="footer-link-contact">mhinnovix@gmail.com</a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 text-sm text-gray-400">
+          <a href="https://play.google.com/store/apps/details?id=com.mhinnovix.hprcscanner" target="_blank" rel="noopener" class="theme-hover-text-primary transition-colors" data-testid="footer-link-app">Download App</a>
+          <a href="https://mhinnovix.github.io/hprcscanner/extension.zip" download class="theme-hover-text-primary transition-colors" data-testid="footer-link-ext">Download Extension</a>
+          <a href="https://mhinnovix.github.io/hprcscanner/legal" class="theme-hover-text-primary transition-colors" data-testid="footer-link-legal">Privacy, Terms & Disclaimer</a>
+          <a href="https://mhinnovix.github.io/" class="theme-hover-text-primary transition-colors" data-testid="footer-link-dev">MH Innovix | Developer</a>
+        </div>
+      </div>
+
+      <div class="mt-10 pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-600">
+        <span>© <span id="year"></span> MH Innovix. All rights reserved.</span>
+        <span class="flex items-center gap-2"><span class="pulse-dot" style="width:6px;height:6px;"></span> Built to save time</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ===== Year =====
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ===== Scroll reveal =====
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          entry.target.style.transitionDelay = (i % 4) * 80 + 'ms';
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // ===== Spotlight cards (CSS var mouse tracking only) =====
+    document.querySelectorAll('.spotlight-card').forEach(card => {
+      card.addEventListener('pointermove', (e) => {
+        const r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      });
+    });
+
+    // ===== Interactive Time Calculator (Gradual Smooth Animation) =====
+    const studentSlider = document.getElementById('studentSlider');
+    const studentCountDisplay = document.getElementById('studentCountDisplay');
+    const manualTimeDisplay = document.getElementById('manualTimeDisplay');
+    const appTimeDisplay = document.getElementById('appTimeDisplay');
+    const savedTimeDisplay = document.getElementById('savedTimeDisplay');
+
+    let currentStudentVal = 50;
+    let targetStudentVal = 50;
+    let animFrameId = null;
+
+    function formatDuration(totalSeconds) {
+      const hrs = Math.floor(totalSeconds / 3600);
+      const mins = Math.floor((totalSeconds % 3600) / 60);
+      const secs = Math.round(totalSeconds % 60);
+      
+      let parts = [];
+      if (hrs > 0) parts.push(`${hrs} hr${hrs > 1 ? 's' : ''}`);
+      if (mins > 0) parts.push(`${mins} min${mins !== 1 ? 's' : ''}`);
+      if (hrs === 0 && secs > 0) parts.push(`${secs} sec${secs !== 1 ? 's' : ''}`);
+      return parts.length > 0 ? parts.join(' ') : '0 secs';
+    }
+
+    function renderTimeValues(val) {
+      const roundedVal = Math.round(val);
+      studentCountDisplay.textContent = roundedVal;
+      studentSlider.value = roundedVal;
+
+      // 150+ marks per student calculation:
+      // Manual typing: 8.5 minutes per student (510 seconds)
+      // HPRC Scanner App: 15 seconds per student
+      const manualSecs = val * 510;
+      const appSecs = val * 15;
+      const savedSecs = manualSecs - appSecs;
+
+      manualTimeDisplay.textContent = formatDuration(manualSecs);
+      appTimeDisplay.textContent = formatDuration(appSecs);
+      savedTimeDisplay.textContent = formatDuration(savedSecs);
+    }
+
+    function animateToTarget() {
+      const diff = targetStudentVal - currentStudentVal;
+      if (Math.abs(diff) < 0.15) {
+        currentStudentVal = targetStudentVal;
+        renderTimeValues(currentStudentVal);
+        cancelAnimationFrame(animFrameId);
+        animFrameId = null;
+        return;
+      }
+
+      currentStudentVal += diff * 0.18; // Smooth spring lerp speed
+      renderTimeValues(currentStudentVal);
+      animFrameId = requestAnimationFrame(animateToTarget);
+    }
+
+    function startAnimationTo(newTarget) {
+      targetStudentVal = Math.max(10, Math.min(300, newTarget));
+      if (!animFrameId) {
+        animFrameId = requestAnimationFrame(animateToTarget);
+      }
+    }
+
+    studentSlider.addEventListener('input', (e) => {
+      startAnimationTo(parseInt(e.target.value, 10));
+    });
+
+    function setStudentPreset(count) {
+      startAnimationTo(count);
+    }
+
+    // Initial render
+    renderTimeValues(50);
+
+    // ===== Ultra-Realistic Interactive Falling Star Canvas =====
+    (function () {
+      const canvas = document.getElementById('cometCanvas');
+      const ctx = canvas.getContext('2d');
+      let DPR = Math.min(window.devicePixelRatio || 1, 2);
+      let W = 0, H = 0;
+
+      const theme = window.__SELECTED_THEME__ || { hueRange: [20, 38], primaryRgb: '255, 107, 0' };
+
+      function resize() {
+        DPR = Math.min(window.devicePixelRatio || 1, 2);
+        W = window.innerWidth; H = window.innerHeight;
+        canvas.width = W * DPR; canvas.height = H * DPR;
+        canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      // Mouse tracking for dynamic celestial attraction & stardust
+      const mouse = { x: -1000, y: -1000 };
+      window.addEventListener('pointermove', (e) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+
+        // Spawn interactive micro stardust at mouse pointer occasionally
+        if (Math.random() < 0.35) {
+          spawnStardust(mouse.x, mouse.y, (Math.random() - 0.5) * 1.5, (Math.random() - 0.5) * 1.5, 0.7);
+        }
+      });
+
+      // Scroll physics tracking
+      let lastScrollY = window.scrollY;
+      let scrollSpeed = 0;
+      let scrollTimer = null;
+      window.addEventListener('scroll', () => {
+        const dy = Math.abs(window.scrollY - lastScrollY);
+        lastScrollY = window.scrollY;
+        if (dy > 0) {
+          scrollSpeed = Math.min(1, scrollSpeed + dy / 80);
+        }
+
+        // Fast scroll triggers occasional subtle extra shooting star
+        if (dy > 30 && Math.random() < 0.2 && meteors.length < 2) {
+          spawnMeteor(true);
+        }
+
+        clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(() => { scrollSpeed = 0; }, 80);
+      }, { passive: true });
+
+      // Falling Star / Meteor Class
+      const meteors = [];
+      const particles = [];
+
+      function spawnMeteor(isFastScroll = false) {
+        // Random direction sector: 
+        // 0 = Left-to-Right diagonal (25° - 60°), 
+        // 1 = Right-to-Left diagonal (120° - 155°), 
+        // 2 = Steep Downward Slant (70° - 110°)
+        const dirSector = Math.floor(Math.random() * 3);
+        let angle;
+
+        if (dirSector === 0) {
+          angle = (Math.PI / 180) * (25 + Math.random() * 35);
+        } else if (dirSector === 1) {
+          angle = (Math.PI / 180) * (120 + Math.random() * 35);
+        } else {
+          angle = (Math.PI / 180) * (70 + Math.random() * 40);
+        }
+
+        const speed = (isFastScroll ? 2.8 + Math.random() * 2.2 : 1.0 + Math.random() * 1.3);
+        const vx = Math.cos(angle) * speed;
+        const vy = Math.sin(angle) * speed;
+
+        let startX, startY;
+        const edge = Math.random();
+
+        if (vx >= 0) { // Moving rightwards
+          if (edge < 0.65) {
+            startX = Math.random() * (W * 0.8) - 50;
+            startY = -70;
+          } else {
+            startX = -70;
+            startY = Math.random() * (H * 0.6);
+          }
+        } else { // Moving leftwards
+          if (edge < 0.65) {
+            startX = Math.random() * (W * 0.8) + (W * 0.2);
+            startY = -70;
+          } else {
+            startX = W + 70;
+            startY = Math.random() * (H * 0.6);
+          }
+        }
+
+        meteors.push({
+          x: startX,
+          y: startY,
+          vx: vx,
+          vy: vy,
+          length: 75 + Math.random() * 95,
+          radius: 1.8 + Math.random() * 1.4,
+          life: 1,
+          decay: 0.0015 + Math.random() * 0.0025,
+          angle: angle,
+          speed: speed
+        });
+      }
+
+      function spawnStardust(x, y, vx, vy, lifeMultiplier = 1) {
+        const hueMin = theme.hueRange[0];
+        const hueMax = theme.hueRange[1];
+        particles.push({
+          x: x + (Math.random() - 0.5) * 4,
+          y: y + (Math.random() - 0.5) * 4,
+          vx: vx + (Math.random() - 0.5) * 0.4,
+          vy: vy + (Math.random() - 0.5) * 0.4,
+          life: 1,
+          decay: (0.014 + Math.random() * 0.018) * lifeMultiplier,
+          size: 1.0 + Math.random() * 1.8,
+          hue: hueMin + Math.random() * (hueMax - hueMin),
+          twinkle: Math.random() * Math.PI
+        });
+      }
+
+      // Initial meteors (subtle single ambient star)
+      for (let i = 0; i < 1; i++) spawnMeteor();
+
+      function step() {
+        ctx.clearRect(0, 0, W, H);
+
+        // Smooth scroll decay
+        scrollSpeed *= 0.93;
+
+        // Auto spawn ambient meteors if count is low (max 1-2 active meteors)
+        if (meteors.length < 2 && Math.random() < 0.008) {
+          spawnMeteor();
+        }
+
+        // Update & Render Meteors
+        for (let i = meteors.length - 1; i >= 0; i--) {
+          const m = meteors[i];
+          
+          // Speed boosted by scroll
+          const currentSpeedMult = 1 + scrollSpeed * 1.1;
+          const curVx = m.vx * currentSpeedMult;
+          const curVy = m.vy * currentSpeedMult;
+
+          m.x += curVx;
+          m.y += curVy;
+          m.life -= m.decay * (1 + scrollSpeed);
+
+          // Spawn tail stardust particles
+          const tailParticles = Math.floor(1 + scrollSpeed * 1.5);
+          for (let p = 0; p < tailParticles; p++) {
+            const frac = Math.random();
+            spawnStardust(
+              m.x - curVx * frac * 2.2,
+              m.y - curVy * frac * 2.2,
+              -curVx * 0.07 + (Math.random() - 0.5) * 0.5,
+              -curVy * 0.07 + (Math.random() - 0.5) * 0.5,
+              0.85
+            );
+          }
+
+          // Off-screen check or end of life
+          if (m.x < -180 || m.x > W + 180 || m.y > H + 180 || m.life <= 0) {
+            meteors.splice(i, 1);
+            continue;
+          }
+
+          // Draw Glowing Tapered Ion Tail
+          const tailLen = m.length * (1 + scrollSpeed * 0.8);
+          const tailX = m.x - Math.cos(m.angle) * tailLen;
+          const tailY = m.y - Math.sin(m.angle) * tailLen;
+
+          const tailGrad = ctx.createLinearGradient(m.x, m.y, tailX, tailY);
+          tailGrad.addColorStop(0, `rgba(255, 255, 255, ${m.life * 0.95})`);
+          tailGrad.addColorStop(0.15, `rgba(${theme.primaryRgb}, ${m.life * 0.8})`);
+          tailGrad.addColorStop(0.5, `rgba(${theme.flareRgb || theme.primaryRgb}, ${m.life * 0.3})`);
+          tailGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+          ctx.lineWidth = m.radius * 2;
+          ctx.lineCap = 'round';
+          ctx.strokeStyle = tailGrad;
+          ctx.beginPath();
+          ctx.moveTo(m.x, m.y);
+          ctx.lineTo(tailX, tailY);
+          ctx.stroke();
+
+          // Draw Natural Glowing Head Nucleus (Soft radial glow, zero crosshair plus lines)
+          const coreR = m.radius * (1 + scrollSpeed * 0.3);
+          const headGrad = ctx.createRadialGradient(m.x, m.y, 0, m.x, m.y, coreR * 5);
+          headGrad.addColorStop(0, `rgba(255, 255, 255, ${m.life})`);
+          headGrad.addColorStop(0.25, `rgba(${theme.primaryRgb}, ${m.life * 0.85})`);
+          headGrad.addColorStop(0.6, `rgba(${theme.primaryRgb}, ${m.life * 0.25})`);
+          headGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+          ctx.fillStyle = headGrad;
+          ctx.beginPath();
+          ctx.arc(m.x, m.y, coreR * 5, 0, Math.PI * 2);
+          ctx.fill();
+
+          // White-Hot Inner Core
+          ctx.fillStyle = `rgba(255, 255, 255, ${m.life})`;
+          ctx.beginPath();
+          ctx.arc(m.x, m.y, coreR * 0.9, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        // Draw & Update Tail Stardust Particles
+        for (let i = particles.length - 1; i >= 0; i--) {
+          const p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.01; // subtle gravity
+          p.life -= p.decay;
+          p.twinkle += 0.1;
+
+          if (p.life <= 0) {
+            particles.splice(i, 1);
+            continue;
+          }
+
+          const alpha = Math.max(0, p.life) * (0.7 + Math.sin(p.twinkle) * 0.3);
+          const r = p.size * p.life;
+
+          const pGrad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, r * 3.5);
+          pGrad.addColorStop(0, `hsla(${p.hue}, 100%, 75%, ${alpha})`);
+          pGrad.addColorStop(0.5, `hsla(${p.hue}, 100%, 55%, ${alpha * 0.4})`);
+          pGrad.addColorStop(1, `hsla(${p.hue}, 100%, 40%, 0)`);
+
+          ctx.fillStyle = pGrad;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, r * 3.5, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    })();
+  </script>
+</body>
+</html>
