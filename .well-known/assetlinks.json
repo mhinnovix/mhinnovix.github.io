@@ -1,0 +1,12 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.mhinnovix.hprcscanner",
+   "sha256_cert_fingerprints": [
+    "B3:A1:DB:5B:18:17:02:F6:65:E2:22:01:BE:E0:98:10:3D:F6:F5:EA:22:E7:B8:E9:AF:48:C7:7A:F6:87:C6:A5",
+    "F0:44:DF:EB:A2:CB:DD:68:70:2A:6F:36:37:CC:ED:03:99:32:6F:E6:85:CE:93:A5:37:FA:10:FC:F0:CD:1C:FC",
+    "86:E6:BF:BE:25:8D:F9:E4:1B:54:E4:F7:68:DF:45:99:22:0B:9A:D5:8D:18:79:03:E8:4F:88:A1:2C:D3:04:B2"
+   ]
+  }
+}]
