@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <meta name="google-site-verification" content="RF3v8kMi22tk050KMP4xqjGoHg1Jyc-IMFdERwRolZA" />
+  
+  <meta name="theme-color" content="#030712" />
+  <title>MH Innovix | Smart Educational Tools</title>
+  <meta name="description" content="Building smarter, faster, and more efficient tools for the future of education." />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── Core Variables & Fonts ─── */
+    :root {
+      --bg: #030712;
+      --cosmic-orange: #ff6b00;
+      --cosmic-amber: #ffa500;
+      --cosmic-flare: #ff3d00;
+      --grid-line: rgba(255,255,255,0.045);
+      --border-soft: rgba(255,255,255,0.06);
+    }
+    * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    html, body {
+      background: var(--bg);
+      color: #e5e7eb;
+      font-family: 'Inter', system-ui, sans-serif;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+    h1, h2, h3, h4, .font-display { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.02em; }
+
+    /* ─── Animated Grid Background ─── */
+    .grid-bg {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(var(--grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+      background-size: 60px 60px;
+      -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, #000 40%, transparent 90%);
+              mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, #000 40%, transparent 90%);
+      animation: gridShift 30s linear infinite;
+    }
+    @keyframes gridShift { 0% { background-position: 0 0, 0 0; } 100% { background-position: 60px 60px, 60px 60px; } }
+
+    /* ─── Ambient Orbs ─── */
+    .orb { position: fixed; border-radius: 9999px; filter: blur(120px); opacity: 0.45; z-index: 0; pointer-events: none; will-change: transform; }
+    .orb.a { width: 480px; height: 480px; background: var(--cosmic-orange); top: -140px; left: -120px; animation: float1 20s ease-in-out infinite; }
+    .orb.b { width: 420px; height: 420px; background: var(--cosmic-amber); bottom: -180px; right: -120px; opacity: .22; animation: float2 24s ease-in-out infinite; }
+    @keyframes float1 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(70px, 50px); } }
+    @keyframes float2 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-60px,-60px); } }
+
+    /* ─── Canvas Comet Layer ─── */
+    #cometCanvas { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+
+    /* ─── Glassmorphism ─── */
+    .glass {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border-soft);
+      backdrop-filter: blur(18px) saturate(140%);
+      -webkit-backdrop-filter: blur(18px) saturate(140%);
+    }
+    .glass-strong {
+      background: rgba(10,12,20,0.6);
+      border: 1px solid rgba(255,255,255,0.07);
+      backdrop-filter: blur(22px) saturate(160%);
+      -webkit-backdrop-filter: blur(22px) saturate(160%);
+    }
+
+    /* ─── Shimmering Text ─── */
+    .shimmer-text {
+      background: linear-gradient(110deg, #ffffff 30%, var(--cosmic-orange) 48%, var(--cosmic-amber) 58%, #ffffff 75%);
+      background-size: 200% 100%;
+      -webkit-background-clip: text; background-clip: text;
+      color: transparent;
+      animation: shimmer 6s linear infinite;
+      filter: drop-shadow(0 0 24px rgba(255,107,0,0.25));
+    }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+    /* ─── Spotlight Card (Glitch-Free CSS + JS Vars) ─── */
+    .spotlight-card {
+      position: relative; overflow: hidden;
+      transition: transform .5s cubic-bezier(.2,.8,.2,1), border-color .5s, box-shadow .5s;
+    }
+    .spotlight-card::before {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(400px circle at var(--mx, -500px) var(--my, -500px), rgba(255,107,0,0.12), transparent 45%);
+      opacity: 0; transition: opacity .35s ease; z-index: 0;
+    }
+    .spotlight-card:hover::before { opacity: 1; }
+    .spotlight-card:hover { 
+      transform: translateY(-6px); 
+      border-color: rgba(255,107,0,0.35); 
+      box-shadow: 0 25px 50px -15px rgba(255,107,0,0.25); 
+    }
+    .card-content { position: relative; z-index: 10; }
+
+    /* ─── Scroll Reveal ─── */
+    .reveal { opacity: 0; transform: translateY(22px) scale(0.98); transition: opacity 0.8s cubic-bezier(.2,.8,.2,1), transform 0.8s cubic-bezier(.2,.8,.2,1); }
+    .reveal.in { opacity: 1; transform: translateY(0 scale(1); }
+
+    /* ─── Icon Glow Box ─── */
+    .mh-logo-box {
+      background: linear-gradient(135deg, rgba(255,107,0,0.1), rgba(255,165,0,0.1));
+      border: 1px solid rgba(255,107,0,0.3);
+      box-shadow: inset 0 0 24px rgba(255,107,0,0.15), 0 0 40px -10px rgba(255,107,0,0.4);
+    }
+  </style>
+</head>
+<body class="selection:bg-orange-500/30 selection:text-orange-200">
+
+  <div class="grid-bg" aria-hidden="true"></div>
+  <div class="orb a" aria-hidden="true"></div>
+  <div class="orb b" aria-hidden="true"></div>
+  <canvas id="cometCanvas" aria-hidden="true"></canvas>
+
+  <div class="relative z-10 flex flex-col min-h-screen">
+    
+    <main class="flex-grow flex flex-col items-center justify-center p-6 w-full max-w-5xl mx-auto">
+      
+      <div class="reveal text-center w-full">
+        <div class="mh-logo-box w-24 h-24 md:w-28 md:h-28 rounded-[2rem] mx-auto mb-8 flex items-center justify-center transition-transform hover:scale-105 duration-500 overflow-hidden">
+        <img src="https://mhinnovix.github.io/assets/MHInnovixLogo.png" alt="MH Innovix Logo" class="w-full h-full object-contain p-2 rounded-[2rem]">
+        </div>
+        
+        <h1 class="font-display font-extrabold text-5xl md:text-7xl mb-6 tracking-tight">
+          <span class="shimmer-text">MH Innovix</span>
+        </h1>
+        
+        <p class="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto mb-16 leading-relaxed">
+          Building smarter, faster, and more efficient tools for the future of education.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6 w-full max-w-3xl">
+        
+        <a href="hprcscanner" class="reveal glass spotlight-card rounded-[2rem] p-8 group block no-underline" style="transition-delay: 100ms;">
+          <div class="card-content flex flex-col h-full">
+            <div class="flex items-center justify-between mb-6">
+              <div class="w-14 h-14 rounded-2xl flex items-center justify-center bg-orange-500/10 border border-orange-500/20 shadow-inner group-hover:scale-110 transition-transform duration-500 overflow-hidden">
+               <img src="https://mhinnovix.github.io/assets/HPRCScannerLogo.png" alt="HPRC Scanner Logo" class="w-full h-full object-contain p-1 rounded-2xl">
+              </div>
+              <div class="w-8 h-8 rounded-full bg-orange-500/10 flex items-center justify-center text-orange-400 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              </div>
+            </div>
+            <h3 class="font-display text-2xl font-bold text-white mb-2 group-hover:text-orange-400 transition-colors">HPRC Scanner</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">
+              AI-powered marks entry & portal automation.
+            </p>
+          </div>
+        </a>
+
+        <div class="reveal glass-strong rounded-[2rem] p-8 opacity-60 cursor-not-allowed border-dashed border-white/20" style="transition-delay: 200ms;">
+          <div class="flex items-center justify-between mb-6">
+            <div class="w-14 h-14 rounded-2xl flex items-center justify-center bg-white/5 border border-white/10 text-slate-500 shadow-inner">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </div>
+          </div>
+          <h3 class="font-display text-2xl font-bold text-slate-300 mb-2">More Apps Coming...</h3>
+          <p class="text-slate-500 text-sm leading-relaxed">
+            New projects are under development.
+          </p>
+        </div>
+
+      </div>
+    </main>
+
+    <footer class="reveal w-full text-center py-8 border-t border-white/5 text-slate-500 text-xs tracking-wide" style="transition-delay: 300ms;">
+      <p class="mb-2 uppercase">© <span id="year"></span> MH Innovix. All rights reserved.</p>
+      <p>Contact: <a href="mailto:mhinnovix@gmail.com" class="text-orange-500/80 hover:text-orange-400 transition-colors">mhinnovix@gmail.com</a></p>
+    </footer>
+
+  </div>
+
+  <script>
+    // Set Footer Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Scroll Reveal Animation (Triggered on load since it's a short page)
+    document.addEventListener("DOMContentLoaded", () => {
+      const elements = document.querySelectorAll('.reveal');
+      setTimeout(() => {
+        elements.forEach(el => el.classList.add('in'));
+      }, 100);
+    });
+
+    // Spotlight Card Mouse Tracking
+    document.querySelectorAll('.spotlight-card').forEach(card => {
+      card.addEventListener('pointermove', (e) => {
+        const r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      });
+      card.addEventListener('pointerleave', () => {
+        card.style.setProperty('--mx', `-500px`);
+        card.style.setProperty('--my', `-500px`);
+      });
+    });
+
+    // Canvas Scroll Comet Effect (Modified for Cosmic Orange Theme)
+    (function () {
+      const canvas = document.getElementById('cometCanvas');
+      const ctx = canvas.getContext('2d');
+      let DPR = Math.min(window.devicePixelRatio || 1, 2);
+      let W = 0, H = 0;
+
+      function resize() {
+        DPR = Math.min(window.devicePixelRatio || 1, 2);
+        W = window.innerWidth; H = window.innerHeight;
+        canvas.width = W * DPR; canvas.height = H * DPR;
+        canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      const comet = { x: W * 0.7, y: -40, vy: 0.8, vx: 0, baseX: W * 0.7, radius: 3.2, time: 0 };
+      
+      function resetIfOffscreen() {
+        if (comet.y > H + 80) {
+          comet.baseX = Math.random() * (W * 0.8) + W * 0.1;
+          comet.x = comet.baseX; 
+          comet.y = -40; 
+          comet.vy = 0.8; // Base passive speed
+        }
+      }
+
+      let lastScrollY = window.scrollY;
+      let scrollingIntensity = 0;
+      window.addEventListener('scroll', () => {
+        const dy = window.scrollY - lastScrollY;
+        lastScrollY = window.scrollY;
+        if (dy > 0) {
+          scrollingIntensity = Math.min(1, scrollingIntensity + Math.min(0.35, dy / 120));
+        }
+      }, { passive: true });
+
+      const particles = [];
+      function spawnParticle() {
+        particles.push({
+          x: comet.x + (Math.random() - 0.5) * 2,
+          y: comet.y + (Math.random() - 0.5) * 2,
+          vx: (Math.random() - 0.5) * 0.6,
+          vy: -comet.vy * (0.2 + Math.random() * 0.3),
+          life: 1, 
+          decay: 0.012 + Math.random() * 0.015,
+          size: 1.4 + Math.random() * 1.8,
+          hue: Math.random() < 0.55 ? 24 : 38 // Cosmic Orange / Gold Amber ranges
+        });
+      }
+
+      function step() {
+        ctx.clearRect(0, 0, W, H);
+        
+        scrollingIntensity *= 0.94; // Decay
+        comet.time += 0.016;
+        
+        const targetVy = 0.8 + scrollingIntensity * 12; 
+        comet.vy += (targetVy - comet.vy) * 0.06;
+        
+        comet.vx = Math.sin(comet.time * 1.4) * 0.6;
+        comet.x = comet.baseX + Math.sin(comet.time * 1.4) * 28;
+        comet.y += comet.vy;
+        
+        const spawnCount = Math.min(6, Math.floor(1 + comet.vy * 0.8));
+        for (let i = 0; i < spawnCount; i++) spawnParticle();
+
+        for (let i = particles.length - 1; i >= 0; i--) {
+          const p = particles[i];
+          p.x += p.vx; p.y += p.vy; p.vy *= 0.985; p.life -= p.decay;
+          if (p.life <= 0) { particles.splice(i, 1); continue; }
+          
+          const alpha = Math.max(0, p.life);
+          const r = p.size * p.life;
+          const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, r * 4);
+          grad.addColorStop(0, `hsla(${p.hue}, 100%, 60%, ${alpha * 0.9})`);
+          grad.addColorStop(0.5, `hsla(${p.hue}, 100%, 50%, ${alpha * 0.25})`);
+          grad.addColorStop(1, `hsla(${p.hue}, 100%, 40%, 0)`);
+          ctx.fillStyle = grad;
+          ctx.beginPath(); ctx.arc(p.x, p.y, r * 4, 0, Math.PI * 2); ctx.fill();
+        }
+
+        const headR = comet.radius + Math.min(3, comet.vy * 0.15);
+        const headGrad = ctx.createRadialGradient(comet.x, comet.y, 0, comet.x, comet.y, headR * 8);
+        headGrad.addColorStop(0, 'rgba(255,255,255,1)');
+        headGrad.addColorStop(0.25, 'rgba(255,200,140,0.95)');
+        headGrad.addColorStop(0.6, 'rgba(255,107,0,0.3)');
+        headGrad.addColorStop(1, 'rgba(255,107,0,0)');
+        ctx.fillStyle = headGrad;
+        ctx.beginPath(); ctx.arc(comet.x, comet.y, headR * 8, 0, Math.PI * 2); ctx.fill();
+        
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath(); ctx.arc(comet.x, comet.y, headR, 0, Math.PI * 2); ctx.fill();
+        
+        resetIfOffscreen();
+        requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    })();
+  </script>
+</body>
+</html>
