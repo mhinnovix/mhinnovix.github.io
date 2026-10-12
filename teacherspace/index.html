@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teacher Space — by MH Innovix</title>
+<meta name="description" content="Teacher Space helps West Bengal school teachers manage leave, salary projection, pay & bonus, Mid-Day Meal records and official notices — with secure backup to your own Google Drive.">
+<style>
+:root{
+  --bg:#f6f7fb;--surface:#ffffff;--text:#1b1f2a;--muted:#5d6577;--line:#e3e6ee;
+  --brand:#2e7d32;--brand-2:#0288d1;--accent:#ef6c00;--chip:#eef6ef;
+  --radius:18px;--shadow:0 10px 30px rgba(20,30,60,.08);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#0f1218;--surface:#171b24;--text:#e8ebf2;--muted:#9aa3b5;--line:#262c39;
+    --brand:#66bb6a;--brand-2:#4fc3f7;--accent:#ffb74d;--chip:#1c2a1f;--shadow:0 10px 30px rgba(0,0,0,.35);}
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);
+  font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:var(--brand-2)}
+.wrap{max-width:980px;margin:0 auto;padding:0 20px}
+header.top{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 85%,transparent);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;text-decoration:none;color:var(--text)}
+.logo span.mark{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;color:#fff;
+  background:linear-gradient(135deg,var(--brand),var(--brand-2));font-size:18px}
+nav a{color:var(--muted);text-decoration:none;margin-left:18px;font-size:15px}
+nav a:hover{color:var(--text)}
+.hero{padding:64px 0 40px;text-align:center}
+.hero h1{font-size:clamp(32px,6vw,52px);line-height:1.15;margin:0 0 12px}
+.hero h1 .grad{background:linear-gradient(90deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.lead{font-size:clamp(16px,2.4vw,19px);color:var(--muted);max-width:640px;margin:0 auto 8px}
+.hero p.bn{color:var(--muted);margin:0 0 28px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;border-radius:999px;font-weight:700;
+  text-decoration:none;background:var(--text);color:var(--bg);box-shadow:var(--shadow)}
+.btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line);box-shadow:none;margin-left:8px}
+.section{padding:36px 0}
+.section h2{font-size:26px;margin:0 0 6px;text-align:center}
+.section p.sub{color:var(--muted);text-align:center;margin:0 0 26px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+.card .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:22px;margin-bottom:10px;background:var(--chip)}
+.card h3{margin:0 0 6px;font-size:18px}
+.card p{margin:0;color:var(--muted);font-size:15px}
+.trust{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.trust .card{box-shadow:none}
+.note{background:var(--surface);border:1px dashed var(--line);border-radius:var(--radius);padding:16px 18px;color:var(--muted);font-size:14px}
+footer{border-top:1px solid var(--line);margin-top:30px;padding:26px 0 40px;color:var(--muted);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
+footer a{color:var(--muted)}
+/* Legal page */
+.legal{padding:40px 0}
+.legal h1{font-size:34px;margin:0 0 4px}
+.legal .meta{color:var(--muted);margin:0 0 24px}
+.toc{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 20px;margin-bottom:28px}
+.toc a{display:inline-block;margin-right:18px;font-weight:600;text-decoration:none}
+.legal section{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px;margin-bottom:22px}
+.legal h2{margin:0 0 10px;font-size:24px;scroll-margin-top:80px}
+.legal h3{margin:22px 0 6px;font-size:17px}
+.legal p,.legal li{color:var(--text)}
+.legal ul{padding-left:20px}
+.legal table{width:100%;border-collapse:collapse;font-size:14.5px;margin:8px 0}
+.legal th,.legal td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+.legal th{background:var(--chip)}
+.logo{white-space:nowrap}
+@media (max-width:560px){nav a{margin-left:12px}nav a.opt{display:none}.btn.ghost{margin:10px 0 0}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="./"><span class="mark">T</span>Teacher Space</a>
+    <nav>
+      <a class="opt" href="#features">Features</a>
+      <a class="opt" href="#privacy">Your data</a>
+      <a href="legal/">Terms &amp; Privacy</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <h1>Everything a teacher needs,<br><span class="grad">in one place.</span></h1>
+      <p class="lead" style="margin-bottom:28px">Leave register, salary projection, pay &amp; bonus, Mid-Day Meal khata and official notices — made for school teachers of West Bengal.</p>
+      <a class="btn" href="https://play.google.com/store/apps/details?id=com.mhinnovix.teacherspace">▶ Get it on Google Play</a>
+      <a class="btn ghost" href="legal/">Terms &amp; Privacy</a>
+    </div>
+  </section>
+
+  <section class="section" id="features">
+    <div class="wrap">
+      <h2>What you can do</h2>
+      <p class="sub">Simple tools for the work that comes with the job.</p>
+      <div class="grid">
+        <div class="card"><div class="ic">📅</div><h3>Leave Register</h3><p>Record every leave, see balances year by year, and export a clean Leave Account PDF.</p></div>
+        <div class="card"><div class="ic">📢</div><h3>Notice Hub</h3><p>Browse official notices month by month, search them and keep the important ones starred.</p></div>
+        <div class="card"><div class="ic">📈</div><h3>Salary Projection</h3><p>See how your pay grows with increments and 10/18/20-year benefits, up to retirement.</p></div>
+        <div class="card"><div class="ic">💰</div><h3>Pay &amp; Bonus</h3><p>Estimate this month's in-hand salary and check your Ad-hoc Bonus eligibility.</p></div>
+        <div class="card"><div class="ic">🍲</div><h3>Mid-Day Meal Khata</h3><p>Daily attendance, rice stock and cooking cost ledger with monthly PDF reports.</p></div>
+        <div class="card"><div class="ic">📂</div><h3>Your Files</h3><p>Every PDF you export is saved in your phone's Download folder and listed in one place.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="privacy">
+    <div class="wrap">
+      <h2>Your data stays yours</h2>
+      <p class="sub">Built so that only you can see your records.</p>
+      <div class="trust">
+        <div class="card"><h3>☁️ Your own Google Drive</h3><p>Backups are saved safely in your own Google Drive and restored when you sign in on a new phone.</p></div>
+        <div class="card"><h3>🔒 Limited access</h3><p>Teacher Space can only see the backup it creates — never your other Drive files.</p></div>
+        <div class="card"><h3>🚫 Never sold</h3><p>We don't sell your personal data to anyone.</p></div>
+      </div>
+      <p style="text-align:center;margin-top:22px"><a href="legal/#privacy">Read the full Privacy Policy →</a></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="note">
+        <strong>Disclaimer:</strong> Teacher Space is an independent productivity tool developed by MH Innovix to help teachers.
+        It is not affiliated with, endorsed by, or connected to any Government body. Salary, bonus and leave calculations are
+        estimates based on published orders — please verify with your DDO / Treasury before relying on them.
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 MH Innovix. All rights reserved.</span>
+    <span><a href="legal/#terms">Terms of Service</a> · <a href="legal/#privacy">Privacy Policy</a> · <a href="mailto:support@example.com">Contact</a></span>
+  </div>
+</footer>
+</body>
+</html>
