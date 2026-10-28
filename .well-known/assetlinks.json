@@ -17,7 +17,9 @@
       "namespace": "android_app",
       "package_name": "com.mhinnovix.teacherspace",
       "sha256_cert_fingerprints": [
-        "11:FA:89:1E:94:82:B3:0B:04:E3:4E:07:CA:FE:B8:47:67:53:72:95:88:65:71:67:21:64:66:FB:B4:9B:9D:02"
+        "11:FA:89:1E:94:82:B3:0B:04:E3:4E:07:CA:FE:B8:47:67:53:72:95:88:65:71:67:21:64:66:FB:B4:9B:9D:02",
+        "AB:E9:A9:2F:CC:D1:14:E0:62:D9:CD:50:FA:11:07:2C:A0:C7:CF:F6:72:12:A3:72:8C:50:4D:8B:50:CE:7F:36",
+        "F0:44:DF:EB:A2:CB:DD:68:70:2A:6F:36:37:CC:ED:03:99:32:6F:E6:85:CE:93:A5:37:FA:10:FC:F0:CD:1C:FC"
       ]
     }
   }
