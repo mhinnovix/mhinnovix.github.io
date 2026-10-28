@@ -6,10 +6,16 @@
     <title>Redirecting to HPRC Scanner...</title>
     
     <!-- JavaScript Redirect (Super Fast) -->
-    <script type="text/javascript">
-        // ইউজারকে সরাসরি আপনার মেইন ওয়েবসাইটে পাঠিয়ে দেবে
+   <script type="text/javascript">
+    var path = window.location.pathname;
+    if (path.indexOf("/teacherspace") !== -1) {
+        // Teacher Space-এর লিংকে আসলে Teacher Space-এর ওয়েবসাইটে পাঠাবে
+        window.location.replace("https://mhinnovix.github.io/teacherspace/");
+    } else {
+        // বাকি সব ক্ষেত্রে HPRC Scanner-এ পাঠাবে
         window.location.replace("https://mhinnovix.github.io/hprcscanner/");
-    </script>
+    }
+</script>
 
     <!-- Fallback Meta Refresh (In case JS is disabled) -->
     <meta http-equiv="refresh" content="0; url=https://mhinnovix.github.io/hprcscanner/">
